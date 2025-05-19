@@ -1,43 +1,53 @@
 import 'dart:io';
-
-
+import 'package:aysar_app/api/repo/auth_repo.dart';
+import 'package:aysar_app/models/user_model.dart';
+import 'package:aysar_app/utils/enms.dart';
+import 'package:aysar_app/utils/utils.dart';
 import 'package:aysar_app/widgets/countries.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class ProfileGetxcontroller extends GetxController {
   @override
   void onInit() {
-    // getMyProfile();
+    getMyProfile();
     super.onInit();
   }
 
-  bool isLoading = false;
-  // ProfileModel? profileModel;
+  RxBool isLoading = false.obs;
+  RxBool updateLoading = false.obs;
+
+  void updatePage({required bool value, required Rx<bool> isLoading}) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        isLoading.value = value;
+      },
+    );
+  }
+
+  var userdata = User().obs;
   AppIntlCountry? selectedIntlCountry;
   File? profileImage;
   TextEditingController namecontroller = TextEditingController();
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController mobileController = TextEditingController();
-  // getMyProfile() async {
-  //   isLoading = true;
-  //   update();
-  //   profileModel = await ProfileRepo().getMyProfile();
-  //   if (profileModel?.status != false) {
-  //     await initializedProfileControlers(profileModel);
-  //   }
-  //   isLoading = false;
-  //   update();
-  // }
+  getMyProfile() async {
+    updatePage(value: true, isLoading: isLoading);
 
-  // initializedProfileControlers(ProfileModel? profileModel) async {
-  //   emailcontroller =
-  //       TextEditingController(text: profileModel?.data?.email ?? "");
-  //   namecontroller =
-  //       TextEditingController(text: profileModel?.data?.name ?? "");
-  //   mobileController =
-  //       TextEditingController(text: profileModel?.data?.mobile ?? "");
-  // }
+    var responce = await AuthRepo().getPtofile();
+    if (responce.success) {
+      userdata.value = responce.data!;
+      await initializedProfileControlers(responce.data);
+    }
+    updatePage(value: false, isLoading: isLoading);
+  }
+
+  initializedProfileControlers(User? userdata) async {
+    emailcontroller = TextEditingController(text: userdata?.email ?? "");
+    namecontroller = TextEditingController(text: userdata?.name ?? "");
+    mobileController = TextEditingController(text: userdata?.mobile ?? "");
+  }
 
   updateProfileImage({required File? image}) {
     profileImage = image;
@@ -47,6 +57,37 @@ class ProfileGetxcontroller extends GetxController {
   updateSelectedIntlCountry({required AppIntlCountry? intlCountry}) {
     selectedIntlCountry = intlCountry;
     update();
+  }
+
+  updateProfile() async {
+    updatePage(value: true, isLoading: updateLoading);
+
+    dio.MultipartFile? profileImageToSend;
+    if (profileImage != null) {
+      profileImageToSend = await dio.MultipartFile.fromFile(
+        profileImage!.path,
+      );
+    } else {
+      profileImageToSend = null;
+    }
+    dio.FormData formData = dio.FormData.fromMap({
+      "name": namecontroller.text,
+      "email": emailcontroller.text,
+      "mobile": mobileController.text,
+      "mobile_country_code": selectedIntlCountry?.code ?? "sa",
+      "dial_code": selectedIntlCountry?.dialCode ?? "966",
+      if (profileImageToSend != null)
+        "image": profileImageToSend, // Add only if exists
+    });
+    var response = await AuthRepo().updateProfile(body: formData);
+
+    if (response.success) {
+      Utils.getSnakBar(type: TosterTypes.sucsses, message: response.message);
+      await getMyProfile();
+    } else {
+      Utils.getSnakBar(type: TosterTypes.failed, message: response.message);
+    }
+    updatePage(value: false, isLoading: updateLoading);
   }
 
   // BaseApiResponce? _baseApiResponse;

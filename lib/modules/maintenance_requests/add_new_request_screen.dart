@@ -3,9 +3,11 @@ import 'package:aysar_app/extensions/sized_box_extension.dart';
 import 'package:aysar_app/helpers/assets_helper.dart';
 import 'package:aysar_app/helpers/data_checker.dart';
 import 'package:aysar_app/models/id_name_model.dart';
-import 'package:aysar_app/modules/maintenance_requests/technical_suppotr_getx_controller.dart';
-import 'package:aysar_app/utils/enms.dart';
-import 'package:aysar_app/utils/utils.dart';
+import 'package:aysar_app/models/properties_model.dart';
+import 'package:aysar_app/modules/maintenance_requests/maintenance_getx_controller.dart';
+import 'package:aysar_app/modules/my_real_estate/properties_getxcontroller.dart';
+import 'package:aysar_app/modules/shareed/shareed_getxcontroller.dart';
+
 import 'package:aysar_app/widgets/attachment_section.dart';
 import 'package:aysar_app/widgets/custom_container.dart';
 import 'package:aysar_app/widgets/my_button.dart';
@@ -24,15 +26,11 @@ class AddNewRequestScreen extends StatefulWidget {
 
 class _AddNewRequestScreenState extends State<AddNewRequestScreen>
     with DataCheckerHelper {
-  final List<IdNameModel> myrealestate = List.generate(
-    3,
-    (index) => IdNameModel(id: index, name: "${index + 1} عقار"),
-  );
-  IdNameModel? selectedRealstate;
-  final List<IdNameModel> problemsList = List.generate(
-    3,
-    (index) => IdNameModel(id: index, name: "${index + 1} مشكلة"),
-  );
+  PropertiesGetxcontroller propertiesGetxcontroller = Get.find();
+  ShareedGetxcontroller shareedGetxcontroller = Get.find();
+
+  PropertiesModel? selectedRealstate;
+
   IdNameModel? selectedProblem;
   @override
   Widget build(BuildContext context) {
@@ -48,7 +46,7 @@ class _AddNewRequestScreenState extends State<AddNewRequestScreen>
         ),
         centerTitle: true,
       ),
-      body: GetBuilder<TechnicalSuppotrGetxController>(
+      body: GetBuilder<MaintenanceGetxController>(
         builder: (controller) => Padding(
           padding: EdgeInsets.only(top: 20.h, right: 16.w, left: 16.w),
           child: SingleChildScrollView(
@@ -69,7 +67,7 @@ class _AddNewRequestScreenState extends State<AddNewRequestScreen>
                       hint: "اختر العقار",
                       hintColor: Colors.black,
                       item: selectedRealstate,
-                      items: myrealestate,
+                      items: propertiesGetxcontroller.properties,
 
                       //controller.newsCategoryModel?.data ?? [],
                       callBack: (_) {
@@ -89,8 +87,7 @@ class _AddNewRequestScreenState extends State<AddNewRequestScreen>
                       hint: "اختر قسم المشكلة",
                       hintColor: Colors.black,
                       item: selectedProblem,
-                      items: myrealestate,
-
+                      items: shareedGetxcontroller.issuesList,
                       //controller.newsCategoryModel?.data ?? [],
                       callBack: (_) {
                         setState(() {
@@ -152,23 +149,30 @@ class _AddNewRequestScreenState extends State<AddNewRequestScreen>
                       },
                     ),
                     25.height,
-                    MyButton(
-                      text: appLocale.send,
-                      loading: false,
-                      onTap: () async {
-                        Navigator.pop(context);
-                        Utils.getSnakBar(
-                            type: TosterTypes.sucsses,
-                            message: "تم ارسال الطلب بنجاح");
-                        // if (controller.checkData) {
-                        //   var res = await controller.storeTicket();
-                        //   if (res?.status != false) {
-                        //     controller.titleController.clear();
-                        //     controller.noteController.clear();
-                        //     controller.attachment = null;
-                        //   }
-                        // }
-                      },
+                    Obx(
+                      () => 
+                   MyButton(
+                        text: appLocale.send,
+                        loading: controller.isLoading.value,
+                        onTap: () async {
+                          
+                          if (controller.checkData) {
+                            var res = await controller.storteMaintenanceRequest(
+                              issue_description: controller.noteController.text,
+                              issue_id: selectedProblem?.id??1,
+                              property_id: selectedRealstate?.id??1
+                      
+                            );
+                            if (res?.status != false) {
+                            
+                              controller.noteController.clear();
+                              controller.attachment = null;
+                            }
+                          }
+                          Navigator.pop(context);
+                      
+                        },
+                      ),
                     )
                   ],
                 ),

@@ -1,14 +1,15 @@
 import 'package:aysar_app/app/app_routs.dart';
 import 'package:aysar_app/extensions/sized_box_extension.dart';
 import 'package:aysar_app/helpers/image_helper.dart';
-import 'package:aysar_app/utils/temp.dart';
+import 'package:aysar_app/models/company_model.dart';
+import 'package:aysar_app/modules/compamies/company_getxcontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 
 class CompanyCard extends StatelessWidget with ImageHelper {
-  final Map<String, dynamic> company;
+  final CompanyModel company;
 
   const CompanyCard({
     super.key,
@@ -19,7 +20,10 @@ class CompanyCard extends StatelessWidget with ImageHelper {
   Widget build(BuildContext context) {
     AppLocalizations appLocale = AppLocalizations.of(context)!;
     return GestureDetector(
-      onTap: () => Get.toNamed(Routes.companyDetailsScreen),
+      onTap: () {
+        Get.find<CompanyGetxcontroller>().getCompaniesDetails(id: company.id!);
+        Get.toNamed(Routes.companyDetailsScreen);
+      },
       child: Container(
         padding: const EdgeInsets.all(12),
         // height: 91.h,
@@ -47,7 +51,7 @@ class CompanyCard extends StatelessWidget with ImageHelper {
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(10.r),
                   child: appCachedImage(
-                    tempImage,
+                    company.image,
                     fit: BoxFit.cover,
                   )),
             ),
@@ -59,11 +63,38 @@ class CompanyCard extends StatelessWidget with ImageHelper {
                 children: [
                   // Company Name
                   Text(
-                    company['name'],
+                    company.companyName ?? "",
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
                     ),
+                  ),
+                  5.height,
+                  // Email
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(
+                          color: Colors.redAccent,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.email,
+                          size: 12,
+                          color: Colors.white,
+                        ),
+                      ),
+                      8.width,
+                      Text(
+                        company.email ?? "",
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
                   ),
                   5.height,
                   // Phone Number
@@ -84,37 +115,9 @@ class CompanyCard extends StatelessWidget with ImageHelper {
                       ),
                       8.width,
                       Text(
-                        company['phone'],
+                        company.mobile ?? "",
                         style: TextStyle(
                           fontSize: 10.sp,
-                          color: Colors.black87,
-                        ),
-                      ),
-                    ],
-                  ),
-                  4.height,
-
-                  // Email
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: const BoxDecoration(
-                          color: Colors.redAccent,
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.email,
-                          size: 12,
-                          color: Colors.white,
-                        ),
-                      ),
-                      8.width,
-                      Text(
-                        company['email'],
-                        style: TextStyle(
-                          fontSize: 14.sp,
                           color: Colors.black87,
                         ),
                       ),
@@ -131,6 +134,7 @@ class CompanyCard extends StatelessWidget with ImageHelper {
                       ),
                     ],
                   ),
+                  // 4.height,
                 ],
               ),
             ),

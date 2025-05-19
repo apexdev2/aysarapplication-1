@@ -124,23 +124,7 @@ class Utils {
                       ),
                     ),
                   ),
-                  PositionedDirectional(
-                    bottom: -25,
-                    end: -10,
-                    child: SvgPicture.asset(
-                      height: 60.h,
-                      width: 70.w,
-                      "assets/icons/circle1.svg",
-                      // ignore: deprecated_member_use
-                      color: type == TosterTypes.failed
-                          ? const Color(0xff99004D)
-                          : type == TosterTypes.sucsses
-                              ? const Color(0xff2FCE8E)
-                              : type == TosterTypes.warning
-                                  ? const Color(0xffB15500)
-                                  : const Color(0xff99004D),
-                    ),
-                  )
+               
                 ],
               ),
             ),

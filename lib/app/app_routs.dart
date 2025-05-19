@@ -9,7 +9,7 @@ import 'package:aysar_app/modules/my_account/profile/profile_screen.dart';
 import 'package:aysar_app/modules/my_account/settings/setting_screen.dart';
 import 'package:aysar_app/modules/my_real_estate/project_stages_screen.dart';
 import 'package:aysar_app/modules/my_real_estate/proparity_details_screen.dart';
-import 'package:aysar_app/modules/my_real_estate/stage_details_screen.dart';
+
 import 'package:aysar_app/modules/splash/splash_screen.dart';
 import 'package:get/get.dart';
 
@@ -30,7 +30,7 @@ class Routes {
   static const String companyDetailsScreen = '/CompanyDetailsScreen';
   static const String proparityDetailsScreen = '/ProparityDetailsScreen';
   static const String projectStagesScreen = '/ProjectStagesScreen';
-  static const String stageDetailsScreen = '/stageDetailsScreen';
+  // static const String stageDetailsScreen = '/stageDetailsScreen';
   static const String settingScreen = '/SettingScreen';
   static const String pagesScreen = '/PagesScreen';
   static const String addNewRequestScreen = '/AddNewRequestScreen';
@@ -64,24 +64,24 @@ List<GetPage<dynamic>> appRoutes = [
   ),
   GetPage(
     name: Routes.companyDetailsScreen,
-    page: () => const CompanyDetailsScreen(),
+    page: () =>  CompanyDetailsScreen(),
     transitionDuration: const Duration(milliseconds: 200),
   ),
   GetPage(
     name: Routes.proparityDetailsScreen,
-    page: () => const ProparityDetailsScreen(),
+    page: () =>  ProparityDetailsScreen(),
     transitionDuration: const Duration(milliseconds: 200),
   ),
   GetPage(
     name: Routes.projectStagesScreen,
-    page: () => const ProjectStagesScreen(),
+    page: () =>  ProjectStagesScreen(),
     transitionDuration: const Duration(milliseconds: 200),
   ),
-  GetPage(
-    name: Routes.stageDetailsScreen,
-    page: () => StageDetailsScreen(),
-    transitionDuration: const Duration(milliseconds: 200),
-  ),
+  // GetPage(
+  //   name: Routes.stageDetailsScreen,
+  //   page: () => StageDetailsScreen(),
+  //   transitionDuration: const Duration(milliseconds: 200),
+  // ),
   GetPage(
     name: Routes.settingScreen,
     page: () => const SettingScreen(),

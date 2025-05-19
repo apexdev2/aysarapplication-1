@@ -3,8 +3,9 @@ import 'package:aysar_app/extensions/sized_box_extension.dart';
 import 'package:aysar_app/helpers/assets_helper.dart';
 import 'package:aysar_app/helpers/image_helper.dart';
 import 'package:aysar_app/modules/home/home_image_slider.dart';
+import 'package:aysar_app/modules/my_account/profile/profile_getxcontroller.dart';
+import 'package:aysar_app/modules/my_real_estate/properties_getxcontroller.dart';
 import 'package:aysar_app/notifcation/app_notification_icon.dart';
-import 'package:aysar_app/utils/temp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -19,6 +20,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with ImageHelper {
   AppLocalizations get appLocale => AppLocalizations.of(context)!;
+   PropertiesGetxcontroller propertiescontroller = Get.find();
+  ProfileGetxcontroller profilecontroller = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +38,6 @@ class _HomeScreenState extends State<HomeScreen> with ImageHelper {
             // Blue Card - Real Estate Development Companies
             GestureDetector(
               onTap: () => Get.toNamed(Routes.companiesScreen),
-
               child: Container(
                 width: double.infinity,
                 height: 135.h,
@@ -127,16 +129,18 @@ class _HomeScreenState extends State<HomeScreen> with ImageHelper {
                     20.width,
                     Column(
                       children: [
-                        Text(
-                          textAlign: TextAlign.center,
-                          textDirection: TextDirection.ltr,
-                          textScaler: const TextScaler.linear(0.8),
-                          "3",
-                          style: TextStyle(
-                            height: 1.2,
-                            color: Colors.white,
-                            fontSize: 120.sp,
-                            fontWeight: FontWeight.w400,
+                        Obx(
+                          () => Text(
+                            textAlign: TextAlign.center,
+                            textDirection: TextDirection.ltr,
+                            textScaler: const TextScaler.linear(0.8),
+                            "${propertiescontroller.properties.length}",
+                            style: TextStyle(
+                              height: 1.2,
+                              color: Colors.white,
+                              fontSize: 120.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
                       ],
@@ -193,56 +197,59 @@ class _HomeScreenState extends State<HomeScreen> with ImageHelper {
     return GestureDetector(
       onTap: () {
         // Get.find<ProfileGetxController>().getMyProfile();
-        // Get.toNamed(Routes.profileScreen);
+        Get.toNamed(Routes.profileScreen);
       },
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            height: 56.h,
-            width: 56.w,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(40),
-              child: appCachedImage(tempImage, fit: BoxFit.cover),
-            ),
-          ),
-          10.width,
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    appLocale.welcomeMessage,
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 14.sp,
-                    ),
-                  ),
-                  5.width,
-                  appSvgImage(AssetsHelper.hand),
-                ],
+      child: Obx(
+        () => Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              height: 56.h,
+              width: 56.w,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
               ),
-              5.height,
-              Text(
-                "Name here ",
-                style: TextStyle(
-                  color: Theme.of(context).hintColor,
-                  fontSize: 12.sp,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(40),
+                child: appCachedImage(profilecontroller.userdata.value.image,
+                    fit: BoxFit.cover),
+              ),
+            ),
+            10.width,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      appLocale.welcomeMessage,
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                    5.width,
+                    appSvgImage(AssetsHelper.hand),
+                  ],
                 ),
-              )
-            ],
-          ),
-          const Spacer(),
-          const AppNotificationIcon(),
-        ],
+                5.height,
+                Text(
+                  profilecontroller.userdata.value.name ?? "",
+                  style: TextStyle(
+                    color: Theme.of(context).hintColor,
+                    fontSize: 12.sp,
+                  ),
+                )
+              ],
+            ),
+            const Spacer(),
+            const AppNotificationIcon(),
+          ],
+        ),
       ),
     );
   }

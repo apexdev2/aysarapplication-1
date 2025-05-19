@@ -1,12 +1,14 @@
-import 'package:aysar_app/app/app_routs.dart';
+import 'package:aysar_app/const/consts.dart';
 import 'package:aysar_app/extensions/sized_box_extension.dart';
+import 'package:aysar_app/models/properties_stages_model.dart';
+import 'package:aysar_app/modules/my_real_estate/stage_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class StatusItem extends StatelessWidget {
-  final Map<String, dynamic> item;
+  final PropertiesStagesModel item;
 
   const StatusItem({
     super.key,
@@ -18,12 +20,15 @@ class StatusItem extends StatelessWidget {
     AppLocalizations appLocale = AppLocalizations.of(context)!;
 
     return GestureDetector(
-      onTap: () => Get.toNamed(Routes.stageDetailsScreen, arguments: item),
-      child:
-       Container(
+      onTap: () => Get.to(
+        () => StageDetailsScreen(stage: item),
+      ),
+      child: Container(
         margin: EdgeInsets.only(bottom: 8.h),
         decoration: BoxDecoration(
-          color: item['color'].withOpacity(0.72),
+          color: HexColor.fromHex(
+            item.status?.color ?? " #ffc107",
+          ).withOpacity(0.4),
           borderRadius: BorderRadius.circular(12.r),
         ),
         child: Padding(
@@ -37,7 +42,7 @@ class StatusItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      item['title'],
+                      item.name ?? "",
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 14.sp,
@@ -53,7 +58,8 @@ class StatusItem extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          item['percentage'],
+                          textDirection: TextDirection.ltr,
+                          "% ${item.ratePercentage}",
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 12.sp,
@@ -70,14 +76,13 @@ class StatusItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  if (item['status'].isNotEmpty)
-                    Text(
-                      item['status'],
-                      style: TextStyle(
-                        fontSize: 10.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  Text(
+                    item.status?.name ?? "",
+                    style: TextStyle(
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.bold,
                     ),
+                  ),
                   5.height,
                   Container(
                     padding:
@@ -100,7 +105,6 @@ class StatusItem extends StatelessWidget {
           ),
         ),
       ),
-   
     );
   }
 }

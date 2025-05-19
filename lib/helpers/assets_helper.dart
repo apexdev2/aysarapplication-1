@@ -33,9 +33,6 @@ class AssetsHelper {
   static const String redemail = "$iconsPath/red_email.svg";
   static const String yellowphone = "$iconsPath/yellow_phone.svg";
 
-  
-
-
   static const String filter = "$iconsPath/filter.svg";
   static const String filterIcon = "$iconsPath/filter_icon.svg";
   static const String calenderRemove = "$iconsPath/calendar-remove.svg";

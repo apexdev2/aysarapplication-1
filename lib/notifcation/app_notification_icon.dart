@@ -1,4 +1,3 @@
-
 import 'package:aysar_app/helpers/assets_helper.dart';
 import 'package:aysar_app/helpers/image_helper.dart';
 import 'package:aysar_app/notifcation/notifcatio_controllere.dart';
@@ -15,11 +14,11 @@ class AppNotificationIcon extends StatelessWidget with ImageHelper {
     return GetBuilder<NotifcatioGEtxControllere>(
       builder: (controller) => GestureDetector(
         onTap: () {
-          // controller.getNotifcationAll();
-          // controller.markAsReadNotifcation();
+          controller.getNotifcationAll();
+          controller.markAsReadNotifcation();
 
           Get.to(
-            () => const NotifcationScreen(),
+            () => NotifcationScreen(),
           );
         },
         child: Stack(

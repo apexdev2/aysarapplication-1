@@ -1,24 +1,26 @@
+import 'package:aysar_app/const/consts.dart';
 import 'package:aysar_app/extensions/sized_box_extension.dart';
 import 'package:aysar_app/helpers/image_helper.dart';
-import 'package:aysar_app/utils/temp.dart';
+import 'package:aysar_app/models/properties_stages_model.dart';
+
 import 'package:aysar_app/widgets/icon_title_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
 import 'package:photo_view/photo_view.dart';
 
 class StageDetailsScreen extends StatelessWidget with ImageHelper {
-  StageDetailsScreen({super.key});
-
+  StageDetailsScreen({super.key, required this.stage});
+  final PropertiesStagesModel stage;
   @override
   Widget build(BuildContext context) {
-    var stage = Get.arguments;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.5,
         title: Text(
-          stage['title'],
+          stage.name ?? "",
           style:
               TextStyle(fontSize: 16.sp, color: Theme.of(context).primaryColor),
         ),
@@ -34,7 +36,8 @@ class StageDetailsScreen extends StatelessWidget with ImageHelper {
               Container(
                 margin: EdgeInsets.only(bottom: 8.h),
                 decoration: BoxDecoration(
-                  color: stage['color'].withOpacity(0.72),
+                  color: HexColor.fromHex(stage.status?.color ?? "")
+                      .withOpacity(0.4),
                   borderRadius: BorderRadius.circular(12.r),
                 ),
                 child: Padding(
@@ -53,7 +56,7 @@ class StageDetailsScreen extends StatelessWidget with ImageHelper {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  stage['title'],
+                                  stage.name ?? "",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 14.sp,
@@ -70,7 +73,8 @@ class StageDetailsScreen extends StatelessWidget with ImageHelper {
                                       ),
                                     ),
                                     Text(
-                                      stage['percentage'],
+                                      " ${stage.ratePercentage} %",
+                                      // "stage['percentage']",
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 12.sp,
@@ -86,40 +90,37 @@ class StageDetailsScreen extends StatelessWidget with ImageHelper {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              if (stage['status'].isNotEmpty)
-                                Text(
-                                  stage['status'],
-                                  style: TextStyle(
-                                    fontSize: 10.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              Text(
+                                stage.status?.name ?? "---",
+                                style: TextStyle(
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.bold,
                                 ),
+                              ),
                             ],
                           ),
                         ],
                       ),
-                      5.height,
-                      Divider(
-                        color: Colors.grey.shade300,
+                      10.height,
+                      const Divider(
+                        color: Colors.grey,
                         height: 0.5,
-                        endIndent: 20.w,
-                        indent: 20.w,
                       ),
-                      20.height,
+                      10.height,
                       IconTitleBuilder(
                         title: "تاريخ البداية",
                         fontWeight: FontWeight.w500,
                         horizontal: 0,
-                        titleColor: Colors.grey,
+                        // titleColor: Colors.black,
                         fontSize: 12.sp,
                         bottom: 10.h,
                         trailing: Text(
-                          "5-9-2024",
+                          stage.startDate ?? "---",
                           style: TextStyle(fontSize: 12.sp, color: Colors.grey),
                         ),
                       ),
-                      Divider(
-                        color: Colors.grey.shade300,
+                      const Divider(
+                        color: Colors.grey,
                         height: 0.5,
                       ),
                       10.height,
@@ -127,40 +128,58 @@ class StageDetailsScreen extends StatelessWidget with ImageHelper {
                         title: "تاريخ النهاية",
                         fontWeight: FontWeight.w500,
                         horizontal: 0,
-                        titleColor: Colors.grey,
+                        // titleColor: Colors.grey,
                         fontSize: 12.sp,
                         bottom: 10.h,
                         trailing: Text(
-                          "5-10-2024",
+                          stage.endDate ?? "---",
                           style: TextStyle(fontSize: 12.sp, color: Colors.grey),
                         ),
                       ),
-                      Divider(
-                        color: Colors.grey.shade300,
+                      const Divider(
+                        color: Colors.grey,
                         height: 0.5,
                       ),
                       10.height,
-                      Text(
-                        "نبذة عن الشركة",
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      10.height,
-                      Text(
-                        """
-هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة،
- لقد تم توليد هذا النص من مولد النص العربى  
-""",
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      10.height,
+
+                      stage.reason != null
+                          ? IconTitleBuilder(
+                              title: "سبب التأخير",
+                              fontWeight: FontWeight.w500,
+                              horizontal: 0,
+                              // titleColor: Colors.grey,
+                              fontSize: 12.sp,
+                              bottom: 10.h,
+                            )
+                          : empty,
+                      stage.reason != null
+                          ? Text(
+                              stage.reason ?? "---",
+                              style: TextStyle(
+                                  fontSize: 12.sp, color: Colors.black),
+                            )
+                          : 10.height,
+                      //           Text(
+                      //             "نبذة عن الشركة",
+                      //             style: TextStyle(
+                      //               color: Colors.grey,
+                      //               fontSize: 12.sp,
+                      //               fontWeight: FontWeight.w500,
+                      //             ),
+                      //           ),
+                      //           10.height,
+                      //           Text(
+                      //             """
+                      // هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة،
+                      //  لقد تم توليد هذا النص من مولد النص العربى
+                      // """,
+                      //             style: TextStyle(
+                      //               color: Colors.grey,
+                      //               fontSize: 10.sp,
+                      //               fontWeight: FontWeight.w500,
+                      //             ),
+                      //           ),
+                      //           10.height,
                       // Row of Images
                       // i need here when tapped image open images in slider in big pop up
                       SizedBox(
@@ -169,14 +188,14 @@ class StageDetailsScreen extends StatelessWidget with ImageHelper {
                           padding: const EdgeInsets.all(16),
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
-                          itemCount: 5,
+                          itemCount: stage.images?.length ?? 0,
                           separatorBuilder: (context, index) => 10.width,
                           itemBuilder: (context, index) => GestureDetector(
-                            onTap: () =>
-                                _openGallery(context, index, imageUrls),
+                            onTap: () => _openGallery(
+                                context, index, stage.images ?? []),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Colors.amber,
+                                color: Colors.grey.shade100,
                                 border:
                                     Border.all(width: 0.5, color: Colors.grey),
                                 borderRadius: BorderRadius.circular(10.r),
@@ -187,7 +206,7 @@ class StageDetailsScreen extends StatelessWidget with ImageHelper {
                                   fit: BoxFit.cover,
                                   height: 90.h,
                                   width: 90.w,
-                                  tempImage,
+                                  stage.images?[index].url,
                                 ),
                               ),
                             ),
@@ -206,7 +225,7 @@ class StageDetailsScreen extends StatelessWidget with ImageHelper {
   }
 
   void _openGallery(
-      BuildContext context, int initialIndex, List<String> imageUrls) {
+      BuildContext context, int initialIndex, List<dynamic> imageUrls) {
     showGeneralDialog(
       context: context,
       barrierLabel: "Dismiss",
@@ -229,7 +248,7 @@ class StageDetailsScreen extends StatelessWidget with ImageHelper {
                         color: Colors
                             .transparent, // <- ensures image background is also transparent
                       ),
-                      imageProvider: NetworkImage(imageUrls[index]),
+                      imageProvider: NetworkImage(imageUrls[index].url),
                       minScale: PhotoViewComputedScale.contained,
                       maxScale: PhotoViewComputedScale.covered * 2,
                     ),
@@ -239,15 +258,18 @@ class StageDetailsScreen extends StatelessWidget with ImageHelper {
               PositionedDirectional(
                 top: 40.h,
                 start: 20.w,
-                child: Container(
-                    alignment: Alignment.center,
-                    height: 30.h,
-                    width: 30.w,
-                    padding: const EdgeInsets.all(5),
-                    decoration: const BoxDecoration(
-                        color: Colors.blue, shape: BoxShape.circle),
-                    child:
-                        const Icon(Icons.close, color: Colors.white, size: 20)),
+                child: GestureDetector(
+                  onTap: () => Get.back(),
+                  child: Container(
+                      alignment: Alignment.center,
+                      height: 30.h,
+                      width: 30.w,
+                      padding: const EdgeInsets.all(5),
+                      decoration: const BoxDecoration(
+                          color: Colors.blue, shape: BoxShape.circle),
+                      child: const Icon(Icons.close,
+                          color: Colors.white, size: 20)),
+                ),
               ),
             ],
           ),
@@ -255,12 +277,4 @@ class StageDetailsScreen extends StatelessWidget with ImageHelper {
       },
     );
   }
-
-  final List<String> imageUrls = [
-    tempImage,
-    tempImage,
-    tempImage,
-    tempImage,
-    tempImage,
-  ];
 }

@@ -5,7 +5,7 @@ import 'package:aysar_app/helpers/assets_helper.dart';
 import 'package:aysar_app/modules/home/home_screen.dart';
 import 'package:aysar_app/modules/maintenance_requests/maintenance_requests_screen.dart';
 import 'package:aysar_app/modules/my_account/my_account_screen.dart';
-import 'package:aysar_app/modules/my_real_estate/my_real_estate_screen.dart';
+import 'package:aysar_app/modules/my_real_estate/my_properties_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -27,9 +27,9 @@ class BottomNavScreenState extends State<BottomNavScreen> {
   // List of screens to navigate to
   final List<Widget> _screens = [
     const HomeScreen(),
-    const MaintenanceRequestsScreen(),
-    const MyRealEstateScreen(),
-    const MyAccountScreen(),
+    MaintenanceRequestsScreen(),
+    MrPropertiesScreen(),
+    MyAccountScreen(),
   ];
   final svgIconPaths = <String>[
     AssetsHelper.nav1,

@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'package:aysar_app/app/app_routs.dart';
 import 'package:aysar_app/extensions/sized_box_extension.dart';
 import 'package:aysar_app/helpers/assets_helper.dart';
 import 'package:aysar_app/helpers/image_helper.dart';
+import 'package:aysar_app/modules/auth/auth_getxcontroller.dart';
 import 'package:aysar_app/widgets/my_button.dart';
 import 'package:aysar_app/widgets/otp_section.dart';
 import 'package:flutter/material.dart';
@@ -169,11 +169,16 @@ class _OtpScreenState extends State<OtpScreen> with ImageHelper {
                     ),
                   ),
                   30.height,
-                  MyButton(
-                    text: appLocale.confirm,
-                    onTap: () async {
-                      Get.toNamed(Routes.bottomNavScreen);
-                    },
+                  GetBuilder<AuthGetxcontroller>(
+                    builder: (controller) => MyButton(
+                      loading: controller.isLoading,
+                      text: appLocale.confirm,
+                      onTap: () {
+                        controller.verifyLoginUser(
+                            code: codeController.text,
+                            loginbody: Get.arguments);
+                      },
+                    ),
                   ),
                 ],
               ),

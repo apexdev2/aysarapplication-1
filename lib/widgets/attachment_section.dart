@@ -13,6 +13,7 @@ class AttachmentSection extends StatefulWidget {
     required this.labelText,
     required this.hintText,
     required this.iconData,
+
     this.borderColor = const Color(0xFFD1D1D1),
     this.fillColor = Colors.white,
     this.iconColor = const Color(0xFFB6B6B6),
@@ -24,6 +25,9 @@ class AttachmentSection extends StatefulWidget {
   final Color borderColor;
   final Color fillColor;
   final Color iconColor;
+
+
+
   final Function(File?)? onFileSelected; // Declare callback
   @override
   State<AttachmentSection> createState() => _AttachmentSectionState();
@@ -53,7 +57,7 @@ class _AttachmentSectionState extends State<AttachmentSection>
           }
           // Call the callback function with the selected file
           if (widget.onFileSelected != null) {
-            widget.onFileSelected!(file);
+             widget.onFileSelected!(file);
           }
         },
         child: Row(

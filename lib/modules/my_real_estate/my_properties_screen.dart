@@ -1,13 +1,17 @@
 import 'package:aysar_app/app/app_routs.dart';
 import 'package:aysar_app/extensions/sized_box_extension.dart';
+import 'package:aysar_app/helpers/image_helper.dart';
+import 'package:aysar_app/models/properties_model.dart';
+import 'package:aysar_app/modules/my_real_estate/properties_getxcontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-class MyRealEstateScreen extends StatelessWidget {
-  const MyRealEstateScreen({super.key});
+class MrPropertiesScreen extends StatelessWidget with ImageHelper {
+  MrPropertiesScreen({super.key});
+  final PropertiesGetxcontroller controller = Get.find();
   @override
   Widget build(BuildContext context) {
     AppLocalizations appLocale = AppLocalizations.of(context)!;
@@ -15,24 +19,35 @@ class MyRealEstateScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.5,
-        title: Text(appLocale.properties),
+        title: Text(
+          appLocale.properties,
+          style: TextStyle(
+            fontSize: 16.sp,
+          ),
+        ),
         centerTitle: true,
       ),
-      body: ListView.separated(
-        padding: EdgeInsetsDirectional.symmetric(
-          vertical: 20.h,
-          horizontal: 16.w,
+      body: Obx(
+        () => ListView.separated(
+          padding: EdgeInsetsDirectional.symmetric(
+            vertical: 20.h,
+            horizontal: 16.w,
+          ),
+          itemBuilder: (context, index) =>
+              buildItem(property: controller.properties[index]),
+          separatorBuilder: (context, index) => 15.height,
+          itemCount: controller.properties.length,
         ),
-        itemBuilder: (context, index) => buildItem(),
-        separatorBuilder: (context, index) => 15.height,
-        itemCount: 5,
       ),
     );
   }
 
-  Widget buildItem() {
+  Widget buildItem({required PropertiesModel property}) {
     return GestureDetector(
-      onTap: () => Get.toNamed(Routes.proparityDetailsScreen),
+      onTap: () {
+        controller.getpropertiesDetails(id: property.id!);
+        Get.toNamed(Routes.proparityDetailsScreen);
+      },
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -56,9 +71,9 @@ class MyRealEstateScreen extends StatelessWidget {
               margin: EdgeInsets.all(12.w),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16.r),
-                child: Image.network(
-                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNFZXe38yVDBAwAMRzwlTrzEv6UhY8RLonCQ&s',
-                  height: 141.h,
+                child: appCachedImage(
+                  property.image ?? "",
+                  height: 200.h,
                   width: double.infinity,
                   fit: BoxFit.cover,
                 ),
@@ -67,7 +82,7 @@ class MyRealEstateScreen extends StatelessWidget {
 
             // Project Info
             Padding(
-              padding: EdgeInsets.all(10.0.w),
+              padding: EdgeInsets.all(12.0.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -78,7 +93,7 @@ class MyRealEstateScreen extends StatelessWidget {
                       // Project Title
                       Expanded(
                         child: Text(
-                          'مشروع مدينة العبور',
+                          property.name ?? "",
                           style: TextStyle(
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w500,
@@ -89,14 +104,14 @@ class MyRealEstateScreen extends StatelessWidget {
                       10.width,
                       // New Tag
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 5),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 12.w, vertical: 5.w),
                         decoration: BoxDecoration(
-                          color: Color(0xff39B6D3),
+                          color: const Color(0xff39B6D3),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
-                          'جديد',
+                          property.type ?? "",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12.sp,
@@ -110,29 +125,34 @@ class MyRealEstateScreen extends StatelessWidget {
                   16.height,
 
                   // Developer
-                  Row(
-                    children: [
-                      Text(
-                        ' المطور :',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: Colors.grey,
+                  GestureDetector(
+                    onTap: () {
+                      // Get.find<CompanyGetxcontroller>()
+                      //     .getCompaniesDetails(id: property.company!.id!);
+                      // Get.toNamed(Routes.companyDetailsScreen);
+                    },
+                    child: Row(
+                      children: [
+                        Text(
+                          'المطور :',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.grey,
+                          ),
                         ),
-                      ),
-                      8.width,
-                      Text(
-                        'شركة ديار باسا',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
+                        8.width,
+                        Text(
+                          property.company?.companyName ?? "",
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-
                   16.height,
-
                   // Completion Percentage
                   Text(
                     'نسبة إنجاز المشروع :',
@@ -144,21 +164,19 @@ class MyRealEstateScreen extends StatelessWidget {
 
                   8.height,
                   // Progress Bar
-
                   LinearPercentIndicator(
                     // width: 140.0,
                     lineHeight: 23.h,
-                    percent: 50 / 100,
+                    percent: property.completionpercentage.toDouble() / 100,
                     isRTL: true,
-
                     addAutomaticKeepAlive: true,
                     animateToInitialPercent: true,
                     animation: true,
                     animationDuration: 1500,
                     barRadius: const Radius.circular(15),
-                    center: const Text(
-                      "50%",
-                      style: TextStyle(color: Colors.black),
+                    center: Text(
+                      "${property.completionpercentage}%",
+                      style: const TextStyle(color: Colors.black),
                     ),
                     backgroundColor: const Color(0xffD8D8D8),
                     progressColor: const Color(0xff108CFF),

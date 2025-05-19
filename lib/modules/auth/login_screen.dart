@@ -1,7 +1,8 @@
-import 'package:aysar_app/app/app_routs.dart';
+
 import 'package:aysar_app/extensions/sized_box_extension.dart';
 import 'package:aysar_app/helpers/assets_helper.dart';
 import 'package:aysar_app/helpers/image_helper.dart';
+import 'package:aysar_app/modules/auth/auth_getxcontroller.dart';
 import 'package:aysar_app/widgets/my_button.dart';
 import 'package:aysar_app/widgets/my_custom_checkbox.dart';
 import 'package:aysar_app/widgets/my_mobile_text_field.dart';
@@ -134,11 +135,19 @@ class _LoginScreenState extends State<LoginScreen> with ImageHelper {
                     ],
                   ),
                   45.height,
-                  MyButton(
-                    text: appLocale.login,
-                    onTap: () async {
-                      Get.toNamed(Routes.otpscreen);
-                    },
+                  GetBuilder<AuthGetxcontroller>(
+                    builder: (controller) => MyButton(
+                      text: appLocale.login,
+                      loading: controller.isLoading,
+                      onTap: () async {
+                        controller.loginUser(
+                            dialCode: selectedIntlCountry?.dialCode ?? "966",
+                            mobileCountryCode:
+                                selectedIntlCountry?.code ?? "sa",
+                            mobile: mobileController.text);
+                        // Get.toNamed(Routes.otpscreen);
+                      },
+                    ),
                   ),
                 ],
               ),

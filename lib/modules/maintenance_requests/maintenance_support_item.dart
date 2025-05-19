@@ -1,15 +1,18 @@
+import 'package:aysar_app/const/consts.dart';
 import 'package:aysar_app/extensions/sized_box_extension.dart';
 import 'package:aysar_app/helpers/assets_helper.dart';
 import 'package:aysar_app/helpers/image_helper.dart';
+import 'package:aysar_app/models/maintenance_request_model.dart';
 import 'package:aysar_app/widgets/custom_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MaintenanceSupportItem extends StatelessWidget with ImageHelper {
-  const MaintenanceSupportItem({
+  MaintenanceSupportItem({
     super.key,
+    required this.data,
   });
-
+  final MaintenanceRequestModel data;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -41,7 +44,7 @@ class MaintenanceSupportItem extends StatelessWidget with ImageHelper {
                 Container(
                   height: 56.h,
                   width: 56.w,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color(0xffFFECDB),
                     shape: BoxShape.circle,
                   ),
@@ -66,7 +69,7 @@ class MaintenanceSupportItem extends StatelessWidget with ImageHelper {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            "صيانة ",
+                            data.issue?.name ?? "",
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 12.sp,
@@ -78,11 +81,11 @@ class MaintenanceSupportItem extends StatelessWidget with ImageHelper {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 10.w, vertical: 5.h),
                             decoration: BoxDecoration(
-                              color: Color(0xff43CB83),
+                              color: HexColor.fromHex(data.status?.color??"#43CB83" ),
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Text(
-                              'مكتمل',
+                              data.status?.name ?? "",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 9.sp,
@@ -94,7 +97,7 @@ class MaintenanceSupportItem extends StatelessWidget with ImageHelper {
                       ),
                       5.height,
                       Text(
-                        "هذا النص هو مثال لنص يمكن يستبدله",
+                        data.issueDescription ?? "",
                         style: TextStyle(
                             color: Colors.grey.shade400, fontSize: 10.sp),
                       ),

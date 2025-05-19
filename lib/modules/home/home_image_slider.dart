@@ -1,16 +1,11 @@
 import 'package:aysar_app/helpers/image_helper.dart';
-import 'package:aysar_app/utils/temp.dart';
+import 'package:aysar_app/modules/shareed/shareed_getxcontroller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
-List<String> sliderList = [
-  tempImage,
-  tempImage,
-  tempImage,
-];
 
 class HomeImageSlider extends StatefulWidget {
   const HomeImageSlider({super.key});
@@ -22,7 +17,7 @@ class HomeImageSlider extends StatefulWidget {
 class _HomeImageSliderState extends State<HomeImageSlider> with ImageHelper {
   final CarouselSliderController _carouselController =
       CarouselSliderController();
-
+  ShareedGetxcontroller shareedGetxcontroller = Get.find();
   int _current = 0;
 
   @override
@@ -41,9 +36,9 @@ class _HomeImageSliderState extends State<HomeImageSlider> with ImageHelper {
               });
             },
           ),
-          items: sliderList
+          items: shareedGetxcontroller.sliderImages
               .map(
-                (item) => buildImageSliderItem(item, context),
+                (item) => buildImageSliderItem(item.image ?? "", context),
               )
               .toList(),
         ),
@@ -70,7 +65,7 @@ class _HomeImageSliderState extends State<HomeImageSlider> with ImageHelper {
     return Center(
       child: AnimatedSmoothIndicator(
         activeIndex: _current,
-        count: sliderList.length,
+        count: shareedGetxcontroller.sliderImages.length,
         effect: ExpandingDotsEffect(
           dotHeight: 8,
           dotWidth: 8,

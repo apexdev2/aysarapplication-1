@@ -1,4 +1,3 @@
-
 import 'package:aysar_app/utils/enms.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -21,13 +20,15 @@ mixin OutAppHelper {
         break;
       case LauncherType.email:
         s = 'mailto:$link';
+        break;
       case LauncherType.whatsapp:
-        s = 'wa.me:$link';
+        s = 'https://wa.me/$link';
         break;
     }
+
     final Uri url = Uri.parse(s);
 
-    if (!await launchUrl(url)) {
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch $url');
     }
   }

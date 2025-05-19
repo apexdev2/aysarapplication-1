@@ -1,7 +1,7 @@
 import 'package:aysar_app/extensions/sized_box_extension.dart';
 import 'package:aysar_app/helpers/image_helper.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NoData extends StatefulWidget {
@@ -23,7 +23,7 @@ class NoData extends StatefulWidget {
 }
 
 class _NoDataState extends State<NoData> with ImageHelper {
-  // AppLocalizations get appLocale => AppLocalizations.of(context)!;
+  AppLocalizations get appLocale => AppLocalizations.of(context)!;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -37,7 +37,7 @@ class _NoDataState extends State<NoData> with ImageHelper {
           ),
           20.height,
           Text(
-            widget.text ?? "appLocale.noData",
+            widget.text ?? appLocale.noData,
             style: TextStyle(
               color: Theme.of(context).primaryColor,
               fontSize: (widget.fontSize ?? 18).sp,

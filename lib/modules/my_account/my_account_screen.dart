@@ -3,7 +3,8 @@ import 'package:aysar_app/extensions/sized_box_extension.dart';
 import 'package:aysar_app/helpers/alert_dialogs_helper.dart';
 import 'package:aysar_app/helpers/assets_helper.dart';
 import 'package:aysar_app/helpers/image_helper.dart';
-import 'package:aysar_app/utils/temp.dart';
+import 'package:aysar_app/modules/auth/auth_getxcontroller.dart';
+import 'package:aysar_app/modules/my_account/profile/profile_getxcontroller.dart';
 import 'package:aysar_app/widgets/custom_container.dart';
 import 'package:aysar_app/widgets/info_widget.dart';
 import 'package:aysar_app/widgets/my_alert_button.dart';
@@ -11,12 +12,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import '../../widgets/my_list_tile.dart';
 
 class MyAccountScreen extends StatelessWidget
     with ImageHelper, AlertDialogsHelper {
-  const MyAccountScreen({super.key});
+  MyAccountScreen({super.key});
+  final ProfileGetxcontroller profilecontroller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,6 @@ class MyAccountScreen extends StatelessWidget
         title: Text(
           appLocale.myaccount,
           style: TextStyle(
-            color: Theme.of(context).primaryColor,
             fontSize: 16.sp,
           ),
         ),
@@ -41,14 +41,16 @@ class MyAccountScreen extends StatelessWidget
           shrinkWrap: true,
           padding: EdgeInsets.symmetric(vertical: 20.h),
           children: [
-            InfoWidget(
-              email: "test@gmail.com",
-              image: tempImage,
-              mobile: "1234353252",
-              name: "علي علاء",
-              onTap: () {
-                Get.toNamed(Routes.profileScreen);
-              },
+            Obx(
+              () => InfoWidget(
+                email: profilecontroller.userdata.value.email,
+                image: profilecontroller.userdata.value.image,
+                mobile: profilecontroller.userdata.value.mobile,
+                name: profilecontroller.userdata.value.name,
+                onTap: () {
+                  Get.toNamed(Routes.profileScreen);
+                },
+              ),
             ),
             25.h.height,
             CustomContainer(
@@ -68,7 +70,6 @@ class MyAccountScreen extends StatelessWidget
                     leading: appLocale.pages,
                     onTap: () {
                       Get.toNamed(Routes.pagesScreen);
-
                     },
                   ),
                   MyListTile(
@@ -127,11 +128,15 @@ class MyAccountScreen extends StatelessWidget
             15.height,
             Row(
               children: [
-                MyAlertButton(
-                  text: appLocale.confirm,
-                  filled: false,
-                  action: filledAction,
-                  loading: loading,
+                GetBuilder<AuthGetxcontroller>(
+                  builder: (controller) => MyAlertButton(
+                    text: appLocale.confirm,
+                    filled: false,
+                    loading: controller.isLoading,
+                    action: () {
+                      controller.logoutUser();
+                    },
+                  ),
                 ),
                 SizedBox(width: 20.w),
                 MyAlertButton(

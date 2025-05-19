@@ -9,7 +9,6 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart' as getx;
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-
 class DioHelper {
   static late String initialLocale;
   static final Dio dio = Dio(); // Singleton Dio instance
@@ -26,6 +25,7 @@ class DioHelper {
         await CacheHelper.getSecureData(key: CacheKeys.token.name) ?? "";
     dio.options = BaseOptions(
       baseUrl: ApiEndPoints.apiFullUrl,
+      //RemoteConfigService.getBaseUrl(),// Get URL from Firebase
       followRedirects: false,
       receiveDataWhenStatusError: true,
       validateStatus: (status) => status! < 500, // Accept responses <500
@@ -81,7 +81,8 @@ class DioHelper {
 
   /// Updates headers dynamically before every request
   static Future<void> _updateHeaders() async {
-    String? token = await CacheHelper.getSecureData(key: CacheKeys.token.name);
+    String? token =
+        await CacheHelper.getSecureData(key: CacheKeys.userToken.name);
 
     dio.options.headers = {
       'Content-Type': 'application/json',
