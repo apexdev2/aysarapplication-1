@@ -2,7 +2,7 @@ class PropertiesStagesModel {
   int? id;
   String? name;
   String? rate;
-  double? ratePercentage;
+  num? ratePercentage;
   Status? status;
   dynamic startDate;
   dynamic endDate;

@@ -62,6 +62,15 @@ mixin PickerHelper {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     return result != null ? File(result.files.single.path!) : null;
   }
+
+  Future<List<File>?> pickMultipleFiles() async {
+  final result = await FilePicker.platform.pickFiles(allowMultiple: true);
+  if (result != null && result.files.isNotEmpty) {
+    return result.files.map((f) => File(f.path!)).toList();
+  }
+  return null;
+}
+
 }
 
 Future<DateTimeRange?> pickDateRange(

@@ -7,35 +7,36 @@ import 'package:aysar_app/helpers/picker_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+
+
 class AttachmentSection extends StatefulWidget {
   const AttachmentSection({
     super.key,
     required this.labelText,
     required this.hintText,
     required this.iconData,
-
     this.borderColor = const Color(0xFFD1D1D1),
     this.fillColor = Colors.white,
     this.iconColor = const Color(0xFFB6B6B6),
-    this.onFileSelected, // Add callback parameter
+    this.onFilesSelected, // updated for multiple files
   });
+
   final String labelText;
   final String hintText;
   final String iconData;
   final Color borderColor;
   final Color fillColor;
   final Color iconColor;
+  final Function(List<File>)? onFilesSelected; // updated callback
 
-
-
-  final Function(File?)? onFileSelected; // Declare callback
   @override
   State<AttachmentSection> createState() => _AttachmentSectionState();
 }
 
 class _AttachmentSectionState extends State<AttachmentSection>
     with ImageHelper, PickerHelper {
-  File? attachment;
+  List<File> attachments = [];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,20 +50,19 @@ class _AttachmentSectionState extends State<AttachmentSection>
       ),
       child: GestureDetector(
         onTap: () async {
-          var file = await pickFile();
-          if (file != null) {
+          final files = await pickMultipleFiles();
+          if (files != null && files.isNotEmpty) {
             setState(() {
-              attachment = file;
+              attachments = files;
             });
-          }
-          // Call the callback function with the selected file
-          if (widget.onFileSelected != null) {
-             widget.onFileSelected!(file);
+
+            if (widget.onFilesSelected != null) {
+              widget.onFilesSelected!(attachments);
+            }
           }
         },
         child: Row(
           children: [
-            // Icon on the right side (for Arabic layout)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: appSvgImage(widget.iconData, color: widget.iconColor),
@@ -70,42 +70,43 @@ class _AttachmentSectionState extends State<AttachmentSection>
             appSvgImage(AssetsHelper.line),
             Expanded(
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 3),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 3),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Label Text
                     Text(
                       widget.labelText,
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 12.0,
                       ),
-                      textAlign: TextAlign
-                          .right, // Align text to right for Arabic layout
+                      textAlign: TextAlign.right,
                     ),
                     8.height,
-                    // hint Text Field
                     Row(
                       children: [
-                        Text(
-                          attachment != null ? "تم ارفاق ملف" : widget.hintText,
-                          style: TextStyle(
-                            color: attachment != null
-                                ? Colors.black
-                                : Colors.grey.shade300,
-                            fontSize: 12.0,
+                        Expanded(
+                          child: Text(
+                            attachments.isNotEmpty
+                                ? "تم إرفاق ${attachments.length} ملف/ملفات"
+                                : widget.hintText,
+                            style: TextStyle(
+                              color: attachments.isNotEmpty
+                                  ? Colors.black
+                                  : Colors.grey.shade300,
+                              fontSize: 12.0,
+                            ),
+                            textAlign: TextAlign.right,
                           ),
-                          textAlign: TextAlign
-                              .right, // Align text to right for Arabic layout
                         ),
-                        const Spacer(),
-                        appSvgImage(AssetsHelper.uploadeattachment,
-                            height: 15.h, width: 15.w)
+                        appSvgImage(
+                          AssetsHelper.uploadeattachment,
+                          height: 15.h,
+                          width: 15.w,
+                        ),
                       ],
                     ),
-                    10.height
+                    10.height,
                   ],
                 ),
               ),

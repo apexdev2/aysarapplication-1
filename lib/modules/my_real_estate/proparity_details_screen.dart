@@ -370,10 +370,14 @@ class ProparityDetailsScreen extends StatelessWidget with ImageHelper {
                                           id: controller
                                               .propertiesdetails.value.id!);
                                       Get.toNamed(Routes.projectStagesScreen,
-                                          arguments: controller
-                                              .propertiesdetails
-                                              .value
-                                              .completionPercentage!);
+                                          arguments: {
+                                            "id": controller
+                                                .propertiesdetails.value.id,
+                                            "percentage": controller
+                                                .propertiesdetails
+                                                .value
+                                                .completionPercentage!
+                                          },);
                                     },
                                     height: 50,
                                     fontSize: 12,

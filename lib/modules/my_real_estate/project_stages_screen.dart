@@ -22,7 +22,9 @@ class ProjectStagesScreen extends StatelessWidget with ImageHelper {
                 scrollController.position.maxScrollExtent &&
             !controller.isLoadingMore.value &&
             controller.pagination.value.hasNext!) {
-          controller.getPropertyStages(isLoadMore: true, id: 5);
+          controller.getPropertyStages(isLoadMore: true, id: 
+          Get.arguments["id"]
+          );
         }
       });
     }
@@ -66,7 +68,7 @@ class ProjectStagesScreen extends StatelessWidget with ImageHelper {
                           LinearPercentIndicator(
                             // width: 140.0,
                             lineHeight: 23.h,
-                            percent: Get.arguments.toDouble() / 100,
+                            percent: Get.arguments["percentage"].toDouble() / 100,
                             isRTL: true,
 
                             addAutomaticKeepAlive: true,
@@ -75,7 +77,7 @@ class ProjectStagesScreen extends StatelessWidget with ImageHelper {
                             animationDuration: 1500,
                             barRadius: const Radius.circular(15),
                             center: Text(
-                              "${Get.arguments}%",
+                              "${Get.arguments["percentage"]}%",
                               style: const TextStyle(color: Colors.black),
                             ),
                             backgroundColor: const Color(0xffD8D8D8),

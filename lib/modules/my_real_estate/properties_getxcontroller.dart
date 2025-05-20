@@ -1,7 +1,7 @@
 // import 'package:aysar_app/api/repo/Properties_repo.dart';
 // import 'package:aysar_app/models/Properties_model.dart';
 
-// import 'dart:developer';
+// import 'dart:developer';0
 
 import 'package:aysar_app/api/repo/properties_repo.dart';
 import 'package:aysar_app/models/pagination_model.dart';
@@ -60,40 +60,40 @@ class PropertiesGetxcontroller extends GetxController {
     updatePage(value: false, isLoading: loadingDetails);
   }
 
-getPropertyStages({
-  required int id,
-  bool isLoadMore = false,
-}) async {
-  if (isLoadMore) {
-    if (!pagination.value.hasNext! || isLoadingMore.value) return;
-    isLoadingMore.value = true;
-  } else {
-    currentPage.value = 1;
-    propertystages.clear();
-    isLoading.value = true;
+  getPropertyStages({
+    required int id,
+    bool isLoadMore = false,
+  }) async {
+    if (isLoadMore) {
+      if (!pagination.value.hasNext! || isLoadingMore.value) return;
+      isLoadingMore.value = true;
+    } else {
+      currentPage.value = 1;
+      propertystages.clear();
+      isLoading.value = true;
+    }
+
+    updatePage(value: true, isLoading: loadingstages);
+
+    var responce = await PropertiesRepo().getPropertyStages(
+      id: id,
+      page: currentPage.value,
+    );
+
+    if (responce.success && responce.dataList != null) {
+      propertystages.addAll(responce.dataList!);
+      pagination.value = responce.pagination!;
+      currentPage.value++; // ✅ تأكد من استخدام .value
+    }
+
+    if (isLoadMore) {
+      isLoadingMore.value = false;
+    } else {
+      isLoading.value = false;
+    }
+
+    updatePage(value: false, isLoading: loadingstages);
   }
-
-  updatePage(value: true, isLoading: loadingstages);
-
-  var responce = await PropertiesRepo().getPropertyStages(
-    id: id,
-    page: currentPage.value,
-  );
-
-  if (responce.success && responce.dataList != null) {
-    propertystages.addAll(responce.dataList!);
-    pagination.value = responce.pagination!;
-    currentPage.value++; // ✅ تأكد من استخدام .value
-  }
-
-  if (isLoadMore) {
-    isLoadingMore.value = false;
-  } else {
-    isLoading.value = false;
-  }
-
-  updatePage(value: false, isLoading: loadingstages);
-}
 
   void updatePage({required bool value, required Rx<bool> isLoading}) {
     WidgetsBinding.instance.addPostFrameCallback((_) {

@@ -133,21 +133,23 @@ class _AddNewRequestScreenState extends State<AddNewRequestScreen>
                     15.height,
                     Text(appLocale.theAttachments),
                     10.height,
-                    AttachmentSection(
-                      labelText: appLocale.theAttachments,
-                      hintText: appLocale.explainRequirements,
-                      iconData: AssetsHelper.paperclip,
-                      onFileSelected: (File? selectedFile) {
-                        // Handle the selected file here
-                        if (selectedFile != null) {
-                          debugPrint(
-                              "Selected file path: ${selectedFile.path}");
-                          // You can now use this file in another screen or process it as needed
-                          controller.updateAttachments(
-                              selectedFile: selectedFile);
-                        }
-                      },
-                    ),
+                   AttachmentSection(
+  labelText: appLocale.theAttachments,
+  hintText: appLocale.explainRequirements,
+  iconData: AssetsHelper.paperclip,
+  onFilesSelected: (List<File> selectedFiles) {
+    // تحقق من وجود ملفات
+    if (selectedFiles.isNotEmpty) {
+      for (var file in selectedFiles) {
+        debugPrint("Selected file path: ${file.path}");
+      }
+
+      // تمرير الملفات إلى الكنترولر
+      controller.updateAttachments(selectedFiles: selectedFiles);
+    }
+  },
+),
+
                     25.height,
                     Obx(
                       () => 
@@ -157,17 +159,18 @@ class _AddNewRequestScreenState extends State<AddNewRequestScreen>
                         onTap: () async {
                           
                           if (controller.checkData) {
-                            var res = await controller.storteMaintenanceRequest(
+                            await controller.storeMaintenanceRequest(
                               issue_description: controller.noteController.text,
                               issue_id: selectedProblem?.id??1,
                               property_id: selectedRealstate?.id??1
+                              
                       
                             );
-                            if (res?.status != false) {
+                            // if (res?. != false) {
                             
-                              controller.noteController.clear();
-                              controller.attachment = null;
-                            }
+                            //   controller.noteController.clear();
+                            //   controller.attachments = null;
+                            // }
                           }
                           Navigator.pop(context);
                       
