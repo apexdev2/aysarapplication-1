@@ -1,5 +1,6 @@
 import 'package:aysar_app/const/consts.dart';
 import 'package:aysar_app/extensions/sized_box_extension.dart';
+import 'package:aysar_app/helpers/converter_helper.dart';
 import 'package:aysar_app/helpers/image_helper.dart';
 import 'package:aysar_app/models/properties_stages_model.dart';
 
@@ -7,12 +8,15 @@ import 'package:aysar_app/widgets/icon_title_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import 'package:photo_view/photo_view.dart';
 
-class StageDetailsScreen extends StatelessWidget with ImageHelper {
+class StageDetailsScreen extends StatelessWidget
+    with ImageHelper, ConverterHelper {
   StageDetailsScreen({super.key, required this.stage});
   final PropertiesStagesModel stage;
+  final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,7 +119,10 @@ class StageDetailsScreen extends StatelessWidget with ImageHelper {
                         fontSize: 12.sp,
                         bottom: 10.h,
                         trailing: Text(
-                          stage.startDate ?? "---",
+                          stage.startDate != null
+                              ? formatIsoDate(
+                                  "${dateFormat.parse(stage.startDate ?? "")}")
+                              : "---",
                           style: TextStyle(fontSize: 12.sp, color: Colors.grey),
                         ),
                       ),
@@ -132,7 +139,10 @@ class StageDetailsScreen extends StatelessWidget with ImageHelper {
                         fontSize: 12.sp,
                         bottom: 10.h,
                         trailing: Text(
-                          stage.endDate ?? "---",
+                          stage.endDate != null
+                              ? formatIsoDate(
+                                  "${dateFormat.parse(stage.endDate ?? "")}")
+                              : "---",
                           style: TextStyle(fontSize: 12.sp, color: Colors.grey),
                         ),
                       ),
@@ -256,8 +266,8 @@ class StageDetailsScreen extends StatelessWidget with ImageHelper {
                 },
               ),
               PositionedDirectional(
-                top: 40.h,
-                start: 20.w,
+                top: 60.h,
+                start: 40.w,
                 child: GestureDetector(
                   onTap: () => Get.back(),
                   child: Container(

@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:photo_view/photo_view.dart';
 
 class ProparityDetailsScreen extends StatelessWidget with ImageHelper {
   ProparityDetailsScreen({super.key});
@@ -78,22 +79,28 @@ class ProparityDetailsScreen extends StatelessWidget with ImageHelper {
                                         .propertyImages?.length ??
                                     0,
                                 separatorBuilder: (context, index) => 10.width,
-                                itemBuilder: (context, index) => Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade100,
-                                    border: Border.all(
-                                        width: 0.5, color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10.r),
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10.r),
-                                    child: appCachedImage(
-                                      fit: BoxFit.cover,
-                                      height: 90.h,
-                                      width: 90.w,
-                                      controller.propertiesdetails.value
-                                              .propertyImages?[index].url ??
-                                          "",
+                                itemBuilder: (context, index) => GestureDetector(
+                                  onTap: () {
+                                    _openGallery(context, index, controller.propertiesdetails.value
+                                        .propertyImages??[]);
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.shade100,
+                                      border: Border.all(
+                                          width: 0.5, color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(10.r),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10.r),
+                                      child: appCachedImage(
+                                        fit: BoxFit.cover,
+                                        height: 90.h,
+                                        width: 90.w,
+                                        controller.propertiesdetails.value
+                                                .propertyImages?[index].url ??
+                                            "",
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -409,4 +416,58 @@ class ProparityDetailsScreen extends StatelessWidget with ImageHelper {
       ),
     );
   }
+      void _openGallery(
+      BuildContext context, int initialIndex, List<dynamic> imageUrls) {
+    showGeneralDialog(
+      context: context,
+      barrierLabel: "Dismiss",
+
+      barrierDismissible: true,
+      barrierColor: Colors.transparent, // <- no dimming overlay
+      transitionDuration: const Duration(milliseconds: 200),
+      pageBuilder: (_, __, ___) {
+        return Material(
+          type: MaterialType.transparency, // <- ensures transparency
+          child: Stack(
+            children: [
+              PageView.builder(
+                controller: PageController(initialPage: initialIndex),
+                itemCount: imageUrls.length,
+                itemBuilder: (context, index) {
+                  return Center(
+                    child: PhotoView(
+                      backgroundDecoration: const BoxDecoration(
+                        color: Colors
+                            .transparent, // <- ensures image background is also transparent
+                      ),
+                      imageProvider: NetworkImage(imageUrls[index].url),
+                      minScale: PhotoViewComputedScale.contained,
+                      maxScale: PhotoViewComputedScale.covered * 2,
+                    ),
+                  );
+                },
+              ),
+              PositionedDirectional(
+                top: 60.h,
+                start: 40.w,
+                child: GestureDetector(
+                  onTap: () => Get.back(),
+                  child: Container(
+                      alignment: Alignment.center,
+                      height: 30.h,
+                      width: 30.w,
+                      padding: const EdgeInsets.all(5),
+                      decoration: const BoxDecoration(
+                          color: Colors.blue, shape: BoxShape.circle),
+                      child: const Icon(Icons.close,
+                          color: Colors.white, size: 20)),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
 }

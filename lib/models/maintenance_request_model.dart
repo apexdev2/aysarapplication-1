@@ -21,16 +21,16 @@ class MaintenanceRequestModel {
   MaintenanceRequestModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     property = json['property'] != null
-        ? new IdNameModel.fromJson(json['property'])
+        ?  IdNameModel.fromJson(json['property'])
         : null;
-    issue = json['issue'] != null ? new IdNameModel.fromJson(json['issue']) : null;
+    issue = json['issue'] != null ? IdNameModel.fromJson(json['issue']) : null;
     issueDescription = json['issue_description'];
     status =
-        json['status'] != null ? new Status.fromJson(json['status']) : null;
+        json['status'] != null ? Status.fromJson(json['status']) : null;
     if (json['attachments'] != null) {
       attachments = <Attachments>[];
       json['attachments'].forEach((v) {
-        attachments!.add(new Attachments.fromJson(v));
+        attachments!.add(Attachments.fromJson(v));
       });
     }
   }
@@ -49,9 +49,9 @@ class Attachments {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['url'] = this.url;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['url'] = url;
     return data;
   }
 }

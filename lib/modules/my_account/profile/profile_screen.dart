@@ -99,9 +99,9 @@ class ProfileScreen extends StatelessWidget with ImageHelper, PickerHelper {
                             hasBorder: false,
                             controller: controller.namecontroller,
                             bottomPadding: 15,
-                            hint: appLocale.username,
-                            prefixIcon: 'email_icon.svg',
-                            labelText: appLocale.fullName,
+                            hint: appLocale.fullName,
+                            prefixIcon: 'person.svg',
+                            labelText: appLocale.theName,
                           ),
                           15.height,
                           MyTextField(

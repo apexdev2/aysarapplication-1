@@ -28,7 +28,7 @@ class PropertiesStagesModel {
     rate = json['rate'];
     ratePercentage = json['rate_percentage'];
     status =
-        json['status'] != null ? new Status.fromJson(json['status']) : null;
+        json['status'] != null ? Status.fromJson(json['status']) : null;
     startDate = json['start_date'];
     endDate = json['end_date'];
     reason = json['reason'];
@@ -36,7 +36,7 @@ class PropertiesStagesModel {
     if (json['images'] != null) {
       images = <Images>[];
       json['images'].forEach((v) {
-        images!.add(new Images.fromJson(v));
+        images!.add( Images.fromJson(v));
       });
     }
   }

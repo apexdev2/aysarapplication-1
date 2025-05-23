@@ -2,8 +2,7 @@ import 'dart:io';
 import 'package:aysar_app/extensions/sized_box_extension.dart';
 import 'package:aysar_app/helpers/assets_helper.dart';
 import 'package:aysar_app/helpers/data_checker.dart';
-import 'package:aysar_app/models/id_name_model.dart';
-import 'package:aysar_app/models/properties_model.dart';
+
 import 'package:aysar_app/modules/maintenance_requests/maintenance_getx_controller.dart';
 import 'package:aysar_app/modules/my_real_estate/properties_getxcontroller.dart';
 import 'package:aysar_app/modules/shareed/shareed_getxcontroller.dart';
@@ -29,9 +28,6 @@ class _AddNewRequestScreenState extends State<AddNewRequestScreen>
   PropertiesGetxcontroller propertiesGetxcontroller = Get.find();
   ShareedGetxcontroller shareedGetxcontroller = Get.find();
 
-  PropertiesModel? selectedRealstate;
-
-  IdNameModel? selectedProblem;
   @override
   Widget build(BuildContext context) {
     AppLocalizations appLocale = AppLocalizations.of(context)!;
@@ -42,7 +38,7 @@ class _AddNewRequestScreenState extends State<AddNewRequestScreen>
         title: Text(
           "طلب صيانة",
           style:
-              TextStyle(fontSize: 16.sp, color: Theme.of(context).primaryColor),
+              TextStyle(fontSize: 16.sp, ),
         ),
         centerTitle: true,
       ),
@@ -66,14 +62,12 @@ class _AddNewRequestScreenState extends State<AddNewRequestScreen>
                       hasBorder: true,
                       hint: "اختر العقار",
                       hintColor: Colors.black,
-                      item: selectedRealstate,
+                      item: controller.selectedRealstate,
                       items: propertiesGetxcontroller.properties,
 
                       //controller.newsCategoryModel?.data ?? [],
                       callBack: (_) {
-                        setState(() {
-                          selectedRealstate = _;
-                        });
+                        controller.updateSelectedRealstate(my_real_estate: _);
                       },
                     ),
                     10.height,
@@ -86,13 +80,11 @@ class _AddNewRequestScreenState extends State<AddNewRequestScreen>
                       hasBorder: true,
                       hint: "اختر قسم المشكلة",
                       hintColor: Colors.black,
-                      item: selectedProblem,
+                      item: controller.selectedProblem,
                       items: shareedGetxcontroller.issuesList,
                       //controller.newsCategoryModel?.data ?? [],
                       callBack: (_) {
-                        setState(() {
-                          selectedProblem = _;
-                        });
+                        controller.updateSelectedProblem(problem: _);
                       },
                     ),
                     10.height,
@@ -133,47 +125,40 @@ class _AddNewRequestScreenState extends State<AddNewRequestScreen>
                     15.height,
                     Text(appLocale.theAttachments),
                     10.height,
-                   AttachmentSection(
-  labelText: appLocale.theAttachments,
-  hintText: appLocale.explainRequirements,
-  iconData: AssetsHelper.paperclip,
-  onFilesSelected: (List<File> selectedFiles) {
-    // تحقق من وجود ملفات
-    if (selectedFiles.isNotEmpty) {
-      for (var file in selectedFiles) {
-        debugPrint("Selected file path: ${file.path}");
-      }
+                    AttachmentSection(
+                      labelText: appLocale.theAttachments,
+                      hintText: appLocale.explainRequirements,
+                      iconData: AssetsHelper.paperclip,
+                      onFilesSelected: (List<File> selectedFiles) {
+                        // تحقق من وجود ملفات
+                        if (selectedFiles.isNotEmpty) {
+                          for (var file in selectedFiles) {
+                            debugPrint("Selected file path: ${file.path}");
+                          }
 
-      // تمرير الملفات إلى الكنترولر
-      controller.updateAttachments(selectedFiles: selectedFiles);
-    }
-  },
-),
-
+                          // تمرير الملفات إلى الكنترولر
+                          controller.updateAttachments(
+                              selectedFiles: selectedFiles);
+                        }
+                      },
+                    ),
                     25.height,
                     Obx(
-                      () => 
-                   MyButton(
+                      () => MyButton(
                         text: appLocale.send,
                         loading: controller.isLoading.value,
                         onTap: () async {
-                          
                           if (controller.checkData) {
-                            await controller.storeMaintenanceRequest(
-                              issue_description: controller.noteController.text,
-                              issue_id: selectedProblem?.id??1,
-                              property_id: selectedRealstate?.id??1
-                              
-                      
-                            );
-                            // if (res?. != false) {
-                            
-                            //   controller.noteController.clear();
-                            //   controller.attachments = null;
-                            // }
+                            var res =
+                                await controller.storeMaintenanceRequest();
+                            if (res != false) {
+                              controller.noteController.clear();
+                              controller.attachments = null;
+                              controller.selectedProblem = null;
+                              controller.selectedRealstate = null;
+                              Navigator.pop(context);
+                            }
                           }
-                          Navigator.pop(context);
-                      
                         },
                       ),
                     )

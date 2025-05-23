@@ -92,13 +92,6 @@ class Specifications {
     description = json['description'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['description'] = this.description;
-    return data;
-  }
 }
 
 class PropertyImages {
@@ -114,8 +107,8 @@ class PropertyImages {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = this.id;
-    data['url'] = this.url;
+    data['id'] = id;
+    data['url'] = url;
     return data;
   }
 }

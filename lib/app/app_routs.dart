@@ -94,7 +94,7 @@ List<GetPage<dynamic>> appRoutes = [
   ),
   GetPage(
     name: Routes.pagesScreen,
-    page: () => PagesScreen(),
+    page: () => const PagesScreen(),
     transitionDuration: const Duration(milliseconds: 200),
   ),
   GetPage(

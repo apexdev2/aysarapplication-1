@@ -6,14 +6,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NotifcationScreen extends StatelessWidget {
   NotifcationScreen({super.key});
   final NotifcatioGEtxControllere controller = Get.find();
   @override
   Widget build(BuildContext context) {
-    // AppLocalizations appLocale = AppLocalizations.of(context)!;
+    AppLocalizations appLocale = AppLocalizations.of(context)!;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0.5,
+        title: Text(
+        appLocale.theNotifications,
+          style:
+              TextStyle(fontSize: 16.sp, ),
+        ),
+        centerTitle: true,
+      ),
       body: Obx(
         () => Stack(
           children: [

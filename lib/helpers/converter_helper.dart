@@ -54,7 +54,15 @@ mixin ConverterHelper {
       minute: int.parse(time.split(':')[1]),
     );
   }
-
+  /// Formats ISO 8601 date string to a readable format like "dd-MM-yyyy"
+  String formatIsoDate(String isoDateString, {String pattern = 'dd-MM-yyyy'}) {
+    try {
+      final parsedDate = DateTime.parse(isoDateString);
+      return DateFormat(pattern).format(parsedDate.toLocal());
+    } catch (e) {
+      return 'Invalid date';
+    }
+  }
   String? cutDialFromMobile({
     required String? mobile,
     required String? dial,

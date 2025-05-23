@@ -64,7 +64,9 @@ mixin PickerHelper {
   }
 
   Future<List<File>?> pickMultipleFiles() async {
-  final result = await FilePicker.platform.pickFiles(allowMultiple: true);
+  final result = await FilePicker.platform.pickFiles(allowMultiple: true,
+  type: FileType.image, 
+  );
   if (result != null && result.files.isNotEmpty) {
     return result.files.map((f) => File(f.path!)).toList();
   }

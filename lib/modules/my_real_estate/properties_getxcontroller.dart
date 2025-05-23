@@ -21,9 +21,16 @@ class PropertiesGetxcontroller extends GetxController {
 
   var pagination = Pagination().obs;
   RxInt currentPage = 1.obs;
+  RxInt currentPageproperties = 1.obs;
+
 
   RxBool isLoadingMore = false.obs;
+  RxBool isLoadingMoreproperties = false.obs;
+  var paginationProperties = Pagination().obs;
+
   RxBool isLoading = false.obs;
+  RxBool isLoadingproperties = false.obs;
+
   RxBool loadingDetails = false.obs;
   RxBool loadingstages = false.obs;
 
@@ -32,18 +39,34 @@ class PropertiesGetxcontroller extends GetxController {
   var properties = <PropertiesModel>[].obs;
   var propertystages = <PropertiesStagesModel>[].obs;
 
-  getProperties() async {
-    updatePage(value: true, isLoading: isLoading);
+  getProperties({
+    bool isLoadMore = false,
 
-    var responce = await PropertiesRepo().getProperties();
-
-    if (responce.success && responce.dataList != null) {
-      properties.value = responce.dataList!;
-      // Utils.getSnakBar(type: TosterTypes.sucsses, message: responce.message);
+  }) async {
+        if (isLoadMore) {
+      if (!paginationProperties.value.hasNext! || isLoadingMoreproperties.value) return;
+      isLoadingMoreproperties.value = true;
     } else {
-      // Utils.getSnakBar(type: TosterTypes.failed, message: responce.message);
+      currentPageproperties.value = 1;
+      properties.clear();
+      isLoadingproperties.value = true;
     }
-    updatePage(value: false, isLoading: isLoading);
+    updatePage(value: true, isLoading: isLoadingproperties);
+
+    var responce = await PropertiesRepo().getProperties(page:currentPageproperties.value );
+
+   if (responce.success && responce.dataList != null) {
+      properties.addAll(responce.dataList!);
+      paginationProperties.value = responce.pagination!;
+      currentPageproperties.value++; // ✅ تأكد من استخدام .value
+    }
+
+    if (isLoadMore) {
+      isLoadingMoreproperties.value = false;
+    } else {
+      isLoadingproperties.value = false;
+    }
+    updatePage(value: false, isLoading: isLoadingproperties);
   }
 
   getpropertiesDetails({required int id}) async {

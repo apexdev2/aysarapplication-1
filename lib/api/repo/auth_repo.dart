@@ -15,6 +15,15 @@ class AuthRepo {
     );
   }
 
+  Future<ApiResponseHandler<BaseApiResponce>> registerUser(
+      {required Map<String, dynamic> body}) async {
+    return await ApiService.sendRequest<BaseApiResponce>(
+      url: ApiEndPoints.register,
+      fromJson: (json) => BaseApiResponce.fromJson(json),
+      body: body,
+      method: RequestMethod.post,
+    );
+  }
   Future<ApiResponseHandler<AuthModel>> verifyloginUser(
       {required Map<String, dynamic> body}) async {
     return await ApiService.sendRequest<AuthModel>(

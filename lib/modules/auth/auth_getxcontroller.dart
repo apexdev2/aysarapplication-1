@@ -66,6 +66,37 @@ class AuthGetxcontroller extends GetxController with SnackBarHelper {
     }
   }
 
+  registerUser({
+    required String? dialCode,
+    required String? mobileCountryCode,
+    required String? mobile,
+    required String? name,
+    required String? email,
+
+  }) async {
+    isLoading = true;
+    update();
+    var responce = await AuthRepo().registerUser(
+      body: {
+        'dial_code': dialCode,
+        'mobile_country_code': mobileCountryCode?.toLowerCase(),
+        'mobile': mobile,
+        "email": email,
+        "name": name
+      },
+    );
+    isLoading = false;
+    update();
+    if (responce.success) {
+      Utils.getSnakBar(type: TosterTypes.sucsses, message: responce.message);
+      Get.toNamed(
+        Routes.loginRoute
+      );
+    } else {
+      Utils.getSnakBar(type: TosterTypes.failed, message: responce.message);
+    }
+  }
+
   logoutUser() async {
     isLoading = true;
     update();

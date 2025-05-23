@@ -6,11 +6,12 @@ import 'package:aysar_app/models/properties_model.dart';
 import 'package:aysar_app/models/properties_stages_model.dart';
 
 class PropertiesRepo {
-  Future<ApiResponseHandler<PropertiesModel>> getProperties() async {
+  Future<ApiResponseHandler<PropertiesModel>> getProperties({int ?page = 1}) async {
     return await ApiService.sendRequest<PropertiesModel>(
       url: ApiEndPoints.properties,
       fromJson: (json) => PropertiesModel.fromJson(json),
       method: RequestMethod.get,
+      query: {"page": page},
     );
   }
 

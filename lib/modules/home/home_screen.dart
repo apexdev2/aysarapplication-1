@@ -2,6 +2,7 @@ import 'package:aysar_app/app/app_routs.dart';
 import 'package:aysar_app/extensions/sized_box_extension.dart';
 import 'package:aysar_app/helpers/assets_helper.dart';
 import 'package:aysar_app/helpers/image_helper.dart';
+import 'package:aysar_app/modules/bnb/bnb_controller.dart';
 import 'package:aysar_app/modules/home/home_image_slider.dart';
 import 'package:aysar_app/modules/my_account/profile/profile_getxcontroller.dart';
 import 'package:aysar_app/modules/my_real_estate/properties_getxcontroller.dart';
@@ -20,7 +21,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with ImageHelper {
   AppLocalizations get appLocale => AppLocalizations.of(context)!;
-   PropertiesGetxcontroller propertiescontroller = Get.find();
+  PropertiesGetxcontroller propertiescontroller = Get.find();
   ProfileGetxcontroller profilecontroller = Get.find();
   @override
   Widget build(BuildContext context) {
@@ -36,75 +37,76 @@ class _HomeScreenState extends State<HomeScreen> with ImageHelper {
             ),
             34.height,
             // Blue Card - Real Estate Development Companies
-            GestureDetector(
-              onTap: () => Get.toNamed(Routes.companiesScreen),
-              child: Container(
-                width: double.infinity,
-                height: 135.h,
-                padding: EdgeInsetsDirectional.only(
-                  start: 15.w,
-                  end: 5.w,
-                  top: 10.h,
-                  bottom: 10.h,
-                ),
-                margin: EdgeInsets.all(16.w),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      const Color(0xff44C2CA),
-                      const Color(0xff037FFF).withOpacity(0.74),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(15.r),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "اطلع على شركات\n التطوير العقاري",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 19.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          10.height,
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 15.w,
-                              vertical: 5.h,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20.r),
-                            ),
-                            child: Text(
-                              'مشاهدة',
-                              style: TextStyle(
-                                fontSize: 15.sp,
-                                color: const Color(0xFF00A7E1),
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 144.w,
-                      child: Image.asset(AssetsHelper.homecard1),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
+            // GestureDetector(
+            //   onTap: () => Get.toNamed(Routes.companiesScreen),
+            //   child: Container(
+            //     width: double.infinity,
+            //     height: 135.h,
+            //     padding: EdgeInsetsDirectional.only(
+            //       start: 15.w,
+            //       end: 5.w,
+            //       top: 10.h,
+            //       bottom: 10.h,
+            //     ),
+            //     margin: EdgeInsets.all(16.w),
+            //     decoration: BoxDecoration(
+            //       gradient: LinearGradient(
+            //         colors: [
+            //           const Color(0xff44C2CA),
+            //           const Color(0xff037FFF).withOpacity(0.74),
+            //         ],
+            //       ),
+            //       borderRadius: BorderRadius.circular(15.r),
+            //     ),
+            //     child: Row(
+            //       children: [
+            //         Expanded(
+            //           child: Column(
+            //             crossAxisAlignment: CrossAxisAlignment.start,
+            //             mainAxisAlignment: MainAxisAlignment.start,
+            //             children: [
+            //               Text(
+            //                 "اطلع على شركات\n التطوير العقاري",
+            //                 style: TextStyle(
+            //                   color: Colors.white,
+            //                   fontSize: 19.sp,
+            //                   fontWeight: FontWeight.bold,
+            //                 ),
+            //               ),
+            //               10.height,
+            //               Container(
+            //                 padding: EdgeInsets.symmetric(
+            //                   horizontal: 15.w,
+            //                   vertical: 5.h,
+            //                 ),
+            //                 decoration: BoxDecoration(
+            //                   color: Colors.white,
+            //                   borderRadius: BorderRadius.circular(20.r),
+            //                 ),
+            //                 child: Text(
+            //                   'مشاهدة',
+            //                   style: TextStyle(
+            //                     fontSize: 15.sp,
+            //                     color: const Color(0xFF00A7E1),
+            //                     fontWeight: FontWeight.w600,
+            //                   ),
+            //                 ),
+            //               ),
+            //             ],
+            //           ),
+            //         ),
+            //         SizedBox(
+            //           width: 144.w,
+            //           child: Image.asset(AssetsHelper.homecard1),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             // Green Card - Property Count
             GestureDetector(
+              onTap: () =>
+                  Get.find<BnbController>().changeCurrentIndex(index: 2),
               child: Container(
                 width: double.infinity,
                 height: 135.h,
@@ -118,8 +120,8 @@ class _HomeScreenState extends State<HomeScreen> with ImageHelper {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      const Color(0xff41D888),
-                      const Color(0xff45B97C).withOpacity(0.74),
+                      const Color(0xff44C2CA),
+                      const Color(0xff037FFF).withOpacity(0.74),
                     ],
                   ),
                   borderRadius: BorderRadius.circular(15.r),

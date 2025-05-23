@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:aysar_app/modules/bnb/bnb_controller.dart';
 import 'package:aysar_app/extensions/sized_box_extension.dart';
@@ -71,7 +73,7 @@ class BottomNavScreenState extends State<BottomNavScreen> {
           ),
           child: AnimatedBottomNavigationBar.builder(
             gapWidth: 10.w,
-            height: 74.h,
+            height:Platform.isIOS ? 65.w : 74.h,
             itemCount: svgIconPaths.length, // Number of items
             tabBuilder: (int index, bool isActive) {
               final color = isActive ? Theme.of(context).primaryColor : null;

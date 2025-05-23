@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "859985060369",
+    "project_id": "aysarapp-92dfd",
+    "storage_bucket": "aysarapp-92dfd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:859985060369:android:1ca752fdbc57b1944787b0",
+        "android_client_info": {
+          "package_name": "com.aysarapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv5LX7r2BpTBa5STinQawICNvN63Ds6x8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

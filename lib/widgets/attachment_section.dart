@@ -50,7 +50,9 @@ class _AttachmentSectionState extends State<AttachmentSection>
       ),
       child: GestureDetector(
         onTap: () async {
-          final files = await pickMultipleFiles();
+          final files = await pickMultipleFiles(
+            
+          );
           if (files != null && files.isNotEmpty) {
             setState(() {
               attachments = files;

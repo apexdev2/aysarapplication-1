@@ -7,11 +7,12 @@ import 'package:aysar_app/models/maintenance_request_model.dart';
 
 class MaintenanceRequestRepo {
   Future<ApiResponseHandler<MaintenanceRequestModel>>
-      getMaintenanceRequest() async {
+      getMaintenanceRequest({int? page = 1}) async {
     return await ApiService.sendRequest<MaintenanceRequestModel>(
       url: ApiEndPoints.maintenance,
       fromJson: (json) => MaintenanceRequestModel.fromJson(json),
       method: RequestMethod.get,
+      query: {"page": page},
     );
   }
     Future<ApiResponseHandler<BaseApiResponce>>

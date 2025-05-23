@@ -1,10 +1,11 @@
-
+// import 'package:aysar_app/app/app_routs.dart';
 import 'package:aysar_app/extensions/sized_box_extension.dart';
 import 'package:aysar_app/helpers/assets_helper.dart';
 import 'package:aysar_app/helpers/image_helper.dart';
 import 'package:aysar_app/modules/auth/auth_getxcontroller.dart';
+import 'package:aysar_app/modules/auth/register_screen.dart';
 import 'package:aysar_app/widgets/my_button.dart';
-import 'package:aysar_app/widgets/my_custom_checkbox.dart';
+// import 'package:aysar_app/widgets/my_custom_checkbox.dart';
 import 'package:aysar_app/widgets/my_mobile_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> with ImageHelper {
   TextEditingController mobileController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   AppIntlCountry? selectedIntlCountry;
-  bool _policy = false;
+  // bool _policy = false;
   @override
   void initState() {
     super.initState();
@@ -114,27 +115,28 @@ class _LoginScreenState extends State<LoginScreen> with ImageHelper {
                     mobileCallback: (c) =>
                         setState(() => selectedIntlCountry = c),
                   ),
-                  10.height,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      CustomCheckbox(
-                        status: _policy,
-                        callBack: (_) => setState(() => _policy = _),
-                      ),
-                      SizedBox(width: 16.w),
-                      GestureDetector(
-                        onTap: () {},
-                        child: Text(
-                          appLocale.agreeOn,
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 10.sp),
-                        ),
-                      ),
-                    ],
-                  ),
-                  45.height,
+                  // 10.height,
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.start,
+                  //   children: [
+                  //     CustomCheckbox(
+                  //       status: _policy,
+                  //       callBack: (_) => setState(() => _policy = _),
+                  //     ),
+                  //     SizedBox(width: 16.w),
+                  //     GestureDetector(
+                  //       onTap: () {},
+                  //       child: Text(
+                  //         appLocale.agreeOn,
+                  //         style: TextStyle(
+                  //             color: Theme.of(context).primaryColor,
+                  //             fontSize: 10.sp),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+
+                  25.height,
                   GetBuilder<AuthGetxcontroller>(
                     builder: (controller) => MyButton(
                       text: appLocale.login,
@@ -148,6 +150,34 @@ class _LoginScreenState extends State<LoginScreen> with ImageHelper {
                         // Get.toNamed(Routes.otpscreen);
                       },
                     ),
+                  ),
+                  15.height,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      // CustomCheckbox(
+                      //   status: _policy,
+                      //   callBack: (_) => setState(() => _policy = _),
+                      // ),
+                      // SizedBox(width: 16.w),
+                      Text(
+                        appLocale.doNotHaveAnAccount,
+                        style: TextStyle(color: Colors.grey, fontSize: 10.sp),
+                      ),
+                      5.width,
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(() => const RegisterScreen());
+                        },
+                        child: Text(
+                          appLocale.createAccount,
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 12.sp,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

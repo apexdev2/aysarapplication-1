@@ -12,9 +12,24 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 class MrPropertiesScreen extends StatelessWidget with ImageHelper {
   MrPropertiesScreen({super.key});
   final PropertiesGetxcontroller controller = Get.find();
+  final ScrollController scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     AppLocalizations appLocale = AppLocalizations.of(context)!;
+        // ignore: invalid_use_of_protected_member
+        if (!scrollController.hasListeners) {
+      scrollController.addListener(() {
+        if (scrollController.position.pixels >=
+                scrollController.position.maxScrollExtent &&
+            !controller.isLoadingMoreproperties.value &&
+            controller.paginationProperties.value.hasNext!) {
+          controller.getProperties(isLoadMore: true, 
+         
+          );
+        }
+      });
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -29,6 +44,7 @@ class MrPropertiesScreen extends StatelessWidget with ImageHelper {
       ),
       body: Obx(
         () => ListView.separated(
+          controller: scrollController,
           padding: EdgeInsetsDirectional.symmetric(
             vertical: 20.h,
             horizontal: 16.w,
@@ -190,4 +206,5 @@ class MrPropertiesScreen extends StatelessWidget with ImageHelper {
       ),
     );
   }
+
 }

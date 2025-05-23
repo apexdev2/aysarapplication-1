@@ -11,10 +11,24 @@ import '../../app/app_routs.dart';
 class MaintenanceRequestsScreen extends StatelessWidget {
   MaintenanceRequestsScreen({super.key});
   final controller = Get.find<MaintenanceGetxController>();
+  final ScrollController scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     AppLocalizations appLocale = AppLocalizations.of(context)!;
+        // ignore: invalid_use_of_protected_member
+    //     if (!scrollController.hasListeners) {
+    //   scrollController.addListener(() {
+    //     if (scrollController.position.pixels >=
+    //             scrollController.position.maxScrollExtent &&
+    //         !controller.isLoadingMore.value &&
+    //         controller.pagination.value.hasNext!) {
+    //       controller.getMaintenanceRequest(isLoadMore: true, 
+         
+    //       );
+    //     }
+    //   });
+    // }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -35,6 +49,7 @@ class MaintenanceRequestsScreen extends StatelessWidget {
             : controller.requestsList.isEmpty
                 ? const NoData()
                 : ListView.separated(
+                  controller: scrollController,
                     padding: EdgeInsetsDirectional.symmetric(
                       vertical: 20.h,
                       horizontal: 16.w,
