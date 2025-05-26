@@ -49,6 +49,7 @@ class ShareedRepo {
       url: ApiEndPoints.notifications,
       fromJson: (json) => NotifcationData.fromJson(json),
       method: RequestMethod.get,
+      query: {"page": page},  
     );
   }
 

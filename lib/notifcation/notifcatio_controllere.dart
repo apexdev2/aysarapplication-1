@@ -1,35 +1,26 @@
 import 'package:aysar_app/api/repo/shareed_repo.dart';
 
 import 'package:aysar_app/models/notifcation_model.dart';
+import 'package:aysar_app/models/pagination_model.dart';
 import 'package:aysar_app/models/unRead_notifcation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NotifcatioGEtxControllere extends GetxController {
   RxBool isLoading = false.obs;
+  RxInt currentPage = 1.obs;
+  RxBool isLoadingMore = false.obs;
+
   @override
   void onInit() {
     super.onInit();
     getNotifcationAll();
-    // getUnReadNotifcation();
 
-    scrollController.addListener(
-      () {
-        if (scrollController.position.pixels ==
-            scrollController.position.maxScrollExtent) {
-          // Trigger load more when reaching the bottom of the list
-          if (!isLoading.value && hasNextPage) {
-            loadMoreNotifcation();
-          }
-        }
-      },
-    );
   }
 
-  final ScrollController scrollController = ScrollController();
-  int currentPage = 1; // Track current page
-  bool hasNextPage = true; // Track if there's more data to load
-  RxList<NotifcationData> notificationList = <NotifcationData>[].obs;
+
+  var notificationList = <NotifcationData>[].obs;
+  var pagination = Pagination().obs;
 
   int _count = 0;
   int get count => _count;
@@ -37,20 +28,30 @@ class NotifcatioGEtxControllere extends GetxController {
   getNotifcationAll({
     bool isLoadMore = false,
   }) async {
-    if (isLoadMore && !hasNextPage)
-      return; // No need to load more if there are no more pages
-    if (!isLoadMore) {
-      // Reset page and list if not loading more
-      currentPage = 1;
+        if (isLoadMore) {
+      if (!pagination.value.hasNext! || isLoadingMore.value) return;
+      isLoadingMore.value = true;
+    } else {
+      currentPage.value = 1;
       notificationList.clear();
+      isLoading.value = true;
     }
     updatePage(value: true, isLoading: isLoading);
 
-    var responce = await ShareedRepo().getNotification(page: currentPage);
-    // Check if we have more pages
-    // hasNextPage = await responce.pagination!.hasNextPage!;
-    // Append new data to the existing list
-    notificationList.addAll(responce.dataList!);
+
+
+    var responce = await ShareedRepo().getNotification(page: currentPage.value);
+    if (responce.success && responce.dataList != null) {
+      notificationList.addAll(responce.dataList!);
+      pagination.value = responce.pagination!;
+      currentPage.value++; // ✅ تأكد من استخدام .value
+    }
+
+    if (isLoadMore) {
+      isLoadingMore.value = false;
+    } else {
+      isLoading.value = false;
+    }
 
     updatePage(value: false, isLoading: isLoading);
 
@@ -58,12 +59,12 @@ class NotifcatioGEtxControllere extends GetxController {
   }
 
 // Method to load more data
-  Future<void> loadMoreNotifcation() async {
-    if (hasNextPage) {
-      currentPage++;
-      getNotifcationAll(isLoadMore: true);
-    }
-  }
+  // Future<void> loadMoreNotifcation() async {
+  //   if (hasNextPage) {
+  //     currentPage++;
+  //     getNotifcationAll(isLoadMore: true);
+  //   }
+  // }
 
   UnReadNotifcation? unReadNotifcation;
   getUnReadNotifcation() async {
