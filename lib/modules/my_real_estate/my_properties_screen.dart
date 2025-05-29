@@ -17,15 +17,15 @@ class MrPropertiesScreen extends StatelessWidget with ImageHelper {
   @override
   Widget build(BuildContext context) {
     AppLocalizations appLocale = AppLocalizations.of(context)!;
-        // ignore: invalid_use_of_protected_member
-        if (!scrollController.hasListeners) {
+    // ignore: invalid_use_of_protected_member
+    if (!scrollController.hasListeners) {
       scrollController.addListener(() {
         if (scrollController.position.pixels >=
                 scrollController.position.maxScrollExtent &&
             !controller.isLoadingMoreproperties.value &&
             controller.paginationProperties.value.hasNext!) {
-          controller.getProperties(isLoadMore: true, 
-         
+          controller.getProperties(
+            isLoadMore: true,
           );
         }
       });
@@ -183,7 +183,9 @@ class MrPropertiesScreen extends StatelessWidget with ImageHelper {
                   LinearPercentIndicator(
                     // width: 140.0,
                     lineHeight: 23.h,
-                    percent: property.completionpercentage.toDouble() / 100,
+                    percent: property.completionpercentage != null
+                        ? property.completionpercentage.toDouble()
+                        : 0.0 / 100,
                     isRTL: true,
                     addAutomaticKeepAlive: true,
                     animateToInitialPercent: true,
@@ -206,5 +208,4 @@ class MrPropertiesScreen extends StatelessWidget with ImageHelper {
       ),
     );
   }
-
 }

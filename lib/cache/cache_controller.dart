@@ -38,6 +38,7 @@ class CacheController {
     await _shared.setString(CacheKeys.userToken.name, '');
     await _shared.setString(CacheKeys.fcmToken.name, '');
     await _shared.setBool(CacheKeys.loggedIn.name, false);
+ 
   }
 
   static String get usertype {

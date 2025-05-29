@@ -104,7 +104,9 @@ class DioHelper {
 
   /// Handles unauthorized responses (401)
   static void _handleUnauthorized() {
-    CacheHelper.clearCache(key: CacheKeys.userToken.name);
+    // CacheHelper.clearCache(key: CacheKeys.userToken.name);
+    CacheHelper.clearAll();
+    // CacheController().logout;
     getx.Get.offAllNamed(Routes.loginRoute);
     log("Redirecting to login page...");
   }
