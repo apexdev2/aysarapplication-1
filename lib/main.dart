@@ -3,13 +3,13 @@ import 'package:aysar_app/api/network/remote/dio_helper.dart';
 import 'package:aysar_app/app/app_binding.dart';
 import 'package:aysar_app/app/app_routs.dart';
 import 'package:aysar_app/cache/cache_controller.dart';
-// import 'package:aysar_app/firebase_options.dart';
-// import 'package:aysar_app/helpers/fb_notifications.dart';
+import 'package:aysar_app/firebase_options.dart';
+import 'package:aysar_app/helpers/fb_notifications.dart';
 import 'package:aysar_app/helpers/lang_controller.dart';
 import 'package:aysar_app/utils/enms.dart';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:firebase_messaging/firebase_messaging.dart';
-// import 'package:flutter/foundation.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,17 +26,17 @@ void main() async {
   }
   await CacheHelper.init();
   await DioHelper.init();
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  // await FbNotifications.initNotifications();
-  // FirebaseMessaging.instance.getToken().then(
-  //   (value) async {
-  //     if (kDebugMode) {
-  //       print('Fcm ==> $value');
-  //     }
-  //     await CacheController()
-  //         .setter(value: value ?? '', key: CacheKeys.fcmToken);
-  //   },
-  // );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await FbNotifications.initNotifications();
+  FirebaseMessaging.instance.getToken().then(
+    (value) async {
+      if (kDebugMode) {
+        print('Fcm ==> $value');
+      }
+      await CacheController()
+          .setter(value: value ?? '', key: CacheKeys.fcmToken);
+    },
+  );
   // Lock orientation to portrait only
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

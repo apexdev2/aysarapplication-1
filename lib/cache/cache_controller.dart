@@ -20,7 +20,7 @@ class CacheController {
     required dynamic value,
   }) async {
     if (value is String) {
-      if (key == CacheKeys.token) {
+      if (key == CacheKeys.userToken) {
         await _shared.setString(key.name, 'Bearer $value');
       } else {
         await _shared.setString(key.name, value);
@@ -35,7 +35,7 @@ class CacheController {
   dynamic getter({required CacheKeys key}) => _shared.get(key.name);
 
   Future<void> get logout async {
-    await _shared.setString(CacheKeys.token.name, '');
+    await _shared.setString(CacheKeys.userToken.name, '');
     await _shared.setString(CacheKeys.fcmToken.name, '');
     await _shared.setBool(CacheKeys.loggedIn.name, false);
   }

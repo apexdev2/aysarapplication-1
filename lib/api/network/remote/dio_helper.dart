@@ -22,7 +22,7 @@ class DioHelper {
   /// Configures Dio with base options and interceptors
   static void _initializeDio() async {
     String token =
-        await CacheHelper.getSecureData(key: CacheKeys.token.name) ?? "";
+        await CacheHelper.getSecureData(key: CacheKeys.userToken.name) ?? "";
     dio.options = BaseOptions(
       baseUrl: ApiEndPoints.apiFullUrl,
       //RemoteConfigService.getBaseUrl(),// Get URL from Firebase
@@ -104,8 +104,8 @@ class DioHelper {
 
   /// Handles unauthorized responses (401)
   static void _handleUnauthorized() {
-    CacheHelper.clearCache(key: CacheKeys.token.name);
-    getx.Get.offAllNamed(Routes.onBordinRoute);
+    CacheHelper.clearCache(key: CacheKeys.userToken.name);
+    getx.Get.offAllNamed(Routes.loginRoute);
     log("Redirecting to login page...");
   }
 

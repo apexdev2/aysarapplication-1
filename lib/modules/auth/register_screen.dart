@@ -153,8 +153,9 @@ class _RegisterScreenState extends State<RegisterScreen>
                         child: Text(
                           appLocale.agreeOn,
                           style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 10.sp),
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 10.sp,
+                          ),
                         ),
                       ),
                     ],
@@ -165,14 +166,16 @@ class _RegisterScreenState extends State<RegisterScreen>
                       text: appLocale.login,
                       loading: controller.isLoading,
                       onTap: () async {
-                        if (checkData) {}
-                        controller.registerUser(
-                          dialCode: selectedIntlCountry?.dialCode ?? "966",
-                          mobileCountryCode: selectedIntlCountry?.code ?? "sa",
-                          mobile: mobileController.text,
-                          email: emailController.text,
-                          name: nameController.text,
-                        );
+                        if (checkData) {
+                          controller.registerUser(
+                            dialCode: selectedIntlCountry?.dialCode ?? "966",
+                            mobileCountryCode:
+                                selectedIntlCountry?.code ?? "sa",
+                            mobile: mobileController.text,
+                            email: emailController.text,
+                            name: nameController.text,
+                          );
+                        }
                       },
                     ),
                   ),

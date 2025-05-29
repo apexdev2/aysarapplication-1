@@ -26,7 +26,6 @@ enum CacheKeys {
   language,
   theme,
   userToken,
-  token,
   fcmToken,
   appSignature,
   name,

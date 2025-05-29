@@ -7,42 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class Utils {
-  // static AppBar customeAppBar({
-  //   String? title,
-  //   bool withProfileIcone = false,
-  //   bool withleadingButton = true,
-  //   bool withactionButton = false,
-  //   Widget? actionWidget,
-  //   Function()? onTap,
-  // }) {
-  //   return AppBar(
-  //     // bottomOpacity: 0,
-  //     centerTitle: true,
-  //     title: Text(
-  //       title ?? "",
-  //       style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-  //     ),
-  //     elevation: 0,
-  //     backgroundColor: Colors.transparent,
-  //     leading: GestureDetector(
-  //       onTap: withProfileIcone
-  //           ? () => Get.toNamed(AppRoutes.profileScreen)
-  //           : () => Get.back(),
-  //       child: withleadingButton
-  //           ? Padding(
-  //               padding: const EdgeInsets.all(10),
-  //               child: SvgPicture.asset(
-  //                 withProfileIcone
-  //                     ? AssetsHelper.profileIcon
-  //                     : AssetsHelper.backButton,
-  //                 fit: BoxFit.cover,
-  //               ),
-  //             )
-  //           : const SizedBox(),
-  //     ),
-  //     actions: [withactionButton ? actionWidget! : const SizedBox()],
-  //   );
-  // }
+
   static const IconData exclamationmark = IconData(
     0xf655,
   );
@@ -68,7 +33,7 @@ class Utils {
                       ? const Color(0xffF9943B)
                       : const Color(0xffF63E50),
           messageText: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(10.r),
             child: Padding(
               padding: EdgeInsetsDirectional.only(
                 start: 16.w,

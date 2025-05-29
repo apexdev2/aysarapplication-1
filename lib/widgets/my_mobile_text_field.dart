@@ -421,7 +421,7 @@ class _MyMobileTextFieldState extends State<MyMobileTextField>
             7.width,
             Expanded(
               child: Text(
-                '+${country.dialCode}      ${lang.lang == 'ar' ? country.nameAr : country.name}',
+                '+${country.dialCode}     ${lang.lang == 'ar' ? country.nameAr : country.name}',
                 style: _textStyle(style, black: widget.isBlack!),
               ),
             ),

@@ -29,9 +29,7 @@ class _SplashScreenState extends State<SplashScreen> with ImageHelper {
             await CacheHelper.getSecureData(key: CacheKeys.userToken.name);
         debugPrint("userToken=========================$userToken");
         if (userToken == null) {
-          
           Get.offNamed(Routes.loginRoute);
-
         } else {
           debugPrint('we are her5555555555555 ');
           Get.offNamed(Routes.bottomNavScreen);

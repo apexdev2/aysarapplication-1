@@ -16,7 +16,6 @@ import 'package:get/get.dart';
 class Routes {
   static const String splashRoute = '/';
   static const String loginRoute = '/LoginScreen';
-  static const String onBordinRoute = '/OnBordingScreen';
   static const String forgetPasswordRoute = '/ForgetPasswordScreen';
   static const String registerRoute = '/RegisterScreen';
   static const String otpscreen = '/OtpScreen';
