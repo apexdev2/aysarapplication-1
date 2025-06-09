@@ -11,7 +11,7 @@ class CustomCheckbox extends StatefulWidget {
   const CustomCheckbox({
     required this.status,
     required this.callBack,
-    this.size = 18,
+    this.size = 20,
     super.key,
   });
 
@@ -31,15 +31,15 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(3.r),
           border: Border.all(
-            color: widget.status
-                ? Theme.of(context).primaryColor
-                : const Color(0xffEAECEE),
+            color: Theme.of(context).primaryColor,
             width: 1.w,
           ),
         ),
         child: Container(
+          
           decoration: BoxDecoration(
-            color: widget.status ? Theme.of(context).primaryColor : null,
+            
+            color: widget.status ? Theme.of(context).primaryColor : Colors.grey.shade200,
             borderRadius: BorderRadius.circular(2.r),
           ),
         ),

@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:859985060369:android:1ca752fdbc57b1944787b0",
+        "mobilesdk_app_id": "1:859985060369:android:f4011998ed30bbed4787b0",
         "android_client_info": {
-          "package_name": "com.aysarapp"
+          "package_name": "com.aysar.application"
         }
       },
       "oauth_client": [],

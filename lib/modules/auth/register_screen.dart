@@ -140,25 +140,30 @@ class _RegisterScreenState extends State<RegisterScreen>
                         setState(() => selectedIntlCountry = c),
                   ),
                   10.height,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      CustomCheckbox(
-                        status: _policy,
-                        callBack: (_) => setState(() => _policy = _),
-                      ),
-                      SizedBox(width: 16.w),
-                      GestureDetector(
-                        onTap: () {},
-                        child: Text(
-                          appLocale.agreeOn,
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 10.sp,
+                  Padding(
+                    padding: EdgeInsetsDirectional.only(start: 0.h),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        CustomCheckbox(
+                          status: _policy,
+                          callBack: (_) => setState(() => _policy = _),
+                        ),
+                        SizedBox(width: 10.w),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {},
+                            child: Text(
+                              appLocale.agreeOn,
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 10.sp,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   25.height,
                   GetBuilder<AuthGetxcontroller>(

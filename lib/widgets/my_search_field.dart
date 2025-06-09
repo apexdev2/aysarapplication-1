@@ -1,5 +1,5 @@
 
-import 'package:aysar_app/helpers/style_comtroller.dart';
+import 'package:aysar_app/helpers/style_controller.dart';
 import 'package:aysar_app/helpers/styles_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
