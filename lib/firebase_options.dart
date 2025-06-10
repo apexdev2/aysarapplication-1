@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCv5LX7r2BpTBa5STinQawICNvN63Ds6x8',
-    appId: '1:859985060369:android:1ca752fdbc57b1944787b0',
+    appId: '1:859985060369:android:f4011998ed30bbed4787b0',
     messagingSenderId: '859985060369',
     projectId: 'aysarapp-92dfd',
     storageBucket: 'aysarapp-92dfd.firebasestorage.app',
@@ -59,10 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCZisyQjEBfvlx9I2CUCHJ6sPdhbk6TLD8',
-    appId: '1:859985060369:ios:10851d10eee58a364787b0',
+    appId: '1:859985060369:ios:43359322597e05a64787b0',
     messagingSenderId: '859985060369',
     projectId: 'aysarapp-92dfd',
     storageBucket: 'aysarapp-92dfd.firebasestorage.app',
-    iosBundleId: 'com.aysarapp',
+    iosBundleId: 'com.aysar.application',
   );
+
 }

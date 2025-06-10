@@ -2,7 +2,7 @@ import 'package:aysar_app/extensions/sized_box_extension.dart';
 import 'package:aysar_app/helpers/assets_helper.dart';
 import 'package:aysar_app/helpers/image_helper.dart';
 import 'package:aysar_app/helpers/lang_controller.dart';
-import 'package:aysar_app/helpers/style_comtroller.dart';
+import 'package:aysar_app/helpers/style_controller.dart';
 import 'package:aysar_app/widgets/countries.dart';
 import 'package:aysar_app/widgets/my_search_field.dart';
 import 'package:flutter/material.dart';
