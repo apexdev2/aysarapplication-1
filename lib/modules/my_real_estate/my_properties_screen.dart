@@ -184,7 +184,7 @@ class MrPropertiesScreen extends StatelessWidget with ImageHelper {
                     // width: 140.0,
                     lineHeight: 23.h,
                     percent: property.completionpercentage != null
-                        ? property.completionpercentage.toDouble()
+                        ? property.completionpercentage.toDouble() / 100
                         : 0.0 / 100,
                     isRTL: true,
                     addAutomaticKeepAlive: true,

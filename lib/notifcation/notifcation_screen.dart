@@ -61,8 +61,19 @@ class NotifcationScreen extends StatelessWidget {
                               final notificationItem =
                                   controller.notificationList[index];
                               return ListTile(
-                                title: Text(
-                                  notificationItem.title ?? "",
+                                title: Row(
+                                  children: [
+                                    Text(
+                                      notificationItem.title ?? "",
+                                    ),
+                                    const Spacer(),
+                                    Text(
+                                      notificationItem.createdAt ?? "",
+                                      style: TextStyle(
+                                          fontSize: 10.sp,
+                                          color: const Color(0xffD8D8D8)),
+                                    ),
+                                  ],
                                 ),
                                 titleTextStyle: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -78,7 +89,7 @@ class NotifcationScreen extends StatelessWidget {
                                 minLeadingWidth: 40.w,
                                 subtitle: Text(
                                   notificationItem.content ?? "",
-                                  maxLines: 3,
+                                  maxLines: 5,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -86,12 +97,6 @@ class NotifcationScreen extends StatelessWidget {
                                       color: const Color(0xffD8D8D8)),
                                 ),
                                 titleAlignment: ListTileTitleAlignment.top,
-                                trailing: Text(
-                                  notificationItem.createdAt ?? "",
-                                  style: TextStyle(
-                                      fontSize: 10.sp,
-                                      color: const Color(0xffD8D8D8)),
-                                ),
                               );
                             },
                             separatorBuilder: (context, index) => SizedBox(

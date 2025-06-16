@@ -1,6 +1,7 @@
 import 'package:aysar_app/api/network/local/cashe_helper.dart';
 import 'package:aysar_app/app/app_routs.dart';
 import 'package:aysar_app/helpers/assets_helper.dart';
+import 'package:aysar_app/helpers/fb_notifications.dart';
 import 'package:aysar_app/helpers/image_helper.dart';
 import 'package:aysar_app/utils/enms.dart';
 import 'package:flutter/material.dart';
@@ -14,11 +15,18 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with ImageHelper {
+class _SplashScreenState extends State<SplashScreen>
+    with ImageHelper, FbNotifications {
   @override
   void initState() {
     super.initState();
+    initNotificationLogic();
     goNext();
+  }
+
+  Future<void> initNotificationLogic() async {
+    debugPrint("****** init Notification Logic ******");
+    await callNotifications();
   }
 
   goNext() {
