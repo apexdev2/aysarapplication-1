@@ -1,3 +1,4 @@
+import 'package:aysar_app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -8,7 +9,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 Future<void> firebaseMessagingBackgroundHandler(
     RemoteMessage remoteMessage) async {
   //BACKGROUND Notifications - iOS & Android
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 }
 
 late AndroidNotificationChannel channel;
@@ -95,18 +96,36 @@ mixin FbNotifications {
     );
   }
 
-  //GENERAL (Android & iOS)
+  /// Handle notification taps while app is in background
   void manageNotificationAction() {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       _controlNotificationNavigation(message.data);
     });
   }
 
-  Future<void> get callNotifications async {
-    requestNotificationPermissions();
-    initializeForegroundNotificationForAndroid();
-    manageNotificationAction();
+  /// Handle notification tap when app is killed and opened via tap
+  Future<void> handleInitialNotification() async {
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null) {
+      _controlNotificationNavigation(initialMessage.data);
+    }
   }
 
-  void _controlNotificationNavigation(Map<String, dynamic> data) {}
+  Future<void> callNotifications() async {
+    await requestNotificationPermissions();
+    initializeForegroundNotificationForAndroid();
+    manageNotificationAction();
+    handleInitialNotification();
+  }
+
+  /// Change this logic to match your app's routing
+  void _controlNotificationNavigation(Map<String, dynamic> data) async {
+    // var userToken = CacheHelper.safeRead(key: CacheKeys.userToken.name);
+    // if (userToken != null && userToken.toString().isNotEmpty) {
+    //   Get.toNamed(Routes.notifcationScreen);
+    // } else {
+    //   Get.toNamed(Routes.loginRoute);
+    // }
+  }
 }
