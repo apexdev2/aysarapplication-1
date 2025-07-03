@@ -32,6 +32,8 @@ class MyDropDownMenu extends StatefulWidget {
   final bool hasBorder;
   final double height;
   final bool isProduct;
+  final bool withFloarnumber;
+
   final bool isQrcode;
   final BoxBorder? border;
   const MyDropDownMenu({
@@ -58,6 +60,7 @@ class MyDropDownMenu extends StatefulWidget {
     this.hasBorder = true,
     this.isProduct = false,
     this.isQrcode = false,
+    this.withFloarnumber = false,
     this.height = 45,
     super.key,
   });
@@ -155,37 +158,21 @@ class _MyDropDownMenuState extends State<MyDropDownMenu> with ImageHelper {
                                   child: Row(
                                     children: [
                                       _prefix(),
-                                      !widget.isProduct && !widget.isQrcode
+                                      widget.withFloarnumber
                                           ? Text(
-                                              '${item?.name ?? ''} ${widget.suffix ?? ''}',
+                                              '${item?.name ?? ''} ( وحدة رقم ${item?.floorNumber ?? ''})',
                                               style: TextStyle(
                                                 color: _black,
                                                 fontSize: 14.sp,
                                               ),
                                             )
-                                          : widget.isQrcode
-                                              ? Text(
-                                                  widget.item?.qrNumber != null
-                                                      ? '${widget.item?.qrNumber} ${widget.suffix ?? ''}'
-                                                      : widget.hint,
-                                                  style: TextStyle(
-                                                    color: widget.item == null
-                                                        ? Colors.grey
-                                                        : _black,
-                                                    fontSize: 14.sp,
-                                                  ),
-                                                )
-                                              : Text(
-                                                  widget.item?.title != null
-                                                      ? '${widget.item?.title} ${widget.suffix ?? ''}'
-                                                      : widget.hint,
-                                                  style: TextStyle(
-                                                    color: widget.item == null
-                                                        ? Colors.grey
-                                                        : _black,
-                                                    fontSize: 14.sp,
-                                                  ),
-                                                ),
+                                          : Text(
+                                              item?.name ?? '',
+                                              style: TextStyle(
+                                                color: _black,
+                                                fontSize: 14.sp,
+                                              ),
+                                            ),
                                     ],
                                   ),
                                 ))

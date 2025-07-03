@@ -65,5 +65,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'aysarapp-92dfd.firebasestorage.app',
     iosBundleId: 'com.aysar.application',
   );
-
 }
