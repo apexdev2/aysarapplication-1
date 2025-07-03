@@ -16,15 +16,15 @@ class MaintenanceRequestsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppLocalizations appLocale = AppLocalizations.of(context)!;
-        // ignore: invalid_use_of_protected_member
+    // ignore: invalid_use_of_protected_member
     //     if (!scrollController.hasListeners) {
     //   scrollController.addListener(() {
     //     if (scrollController.position.pixels >=
     //             scrollController.position.maxScrollExtent &&
     //         !controller.isLoadingMore.value &&
     //         controller.pagination.value.hasNext!) {
-    //       controller.getMaintenanceRequest(isLoadMore: true, 
-         
+    //       controller.getMaintenanceRequest(isLoadMore: true,
+
     //       );
     //     }
     //   });
@@ -48,17 +48,21 @@ class MaintenanceRequestsScreen extends StatelessWidget {
               )
             : controller.requestsList.isEmpty
                 ? const NoData()
-                : ListView.separated(
-                  controller: scrollController,
-                    padding: EdgeInsetsDirectional.symmetric(
-                      vertical: 20.h,
-                      horizontal: 16.w,
+                : RefreshIndicator(
+                    onRefresh: () => controller.getMaintenanceRequest(),
+                    child: ListView.separated(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      controller: scrollController,
+                      padding: EdgeInsetsDirectional.symmetric(
+                        vertical: 20.h,
+                        horizontal: 16.w,
+                      ),
+                      itemBuilder: (context, index) => MaintenanceSupportItem(
+                        data: controller.requestsList[index],
+                      ),
+                      separatorBuilder: (context, index) => 15.height,
+                      itemCount: controller.requestsList.length,
                     ),
-                    itemBuilder: (context, index) => MaintenanceSupportItem(
-                      data: controller.requestsList[index],
-                    ),
-                    separatorBuilder: (context, index) => 15.height,
-                    itemCount: controller.requestsList.length,
                   ),
       ),
       floatingActionButton: GestureDetector(

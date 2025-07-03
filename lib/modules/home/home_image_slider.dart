@@ -62,6 +62,11 @@ class _HomeImageSliderState extends State<HomeImageSlider> with ImageHelper {
 
   // Build the circle indicator
   Widget buildIndicator() {
+    final itemCount = shareedGetxcontroller.sliderImages.length;
+
+    if (itemCount == 0) {
+      return const SizedBox(); // أو return Container();
+    }
     return Center(
       child: AnimatedSmoothIndicator(
         activeIndex: _current,

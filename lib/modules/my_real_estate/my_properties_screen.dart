@@ -43,16 +43,20 @@ class MrPropertiesScreen extends StatelessWidget with ImageHelper {
         centerTitle: true,
       ),
       body: Obx(
-        () => ListView.separated(
-          controller: scrollController,
-          padding: EdgeInsetsDirectional.symmetric(
-            vertical: 20.h,
-            horizontal: 16.w,
+        () => RefreshIndicator(
+          onRefresh: () => controller.getProperties(),
+          child: ListView.separated(
+            physics: const AlwaysScrollableScrollPhysics(),
+            controller: scrollController,
+            padding: EdgeInsetsDirectional.symmetric(
+              vertical: 20.h,
+              horizontal: 16.w,
+            ),
+            itemBuilder: (context, index) =>
+                buildItem(property: controller.properties[index]),
+            separatorBuilder: (context, index) => 15.height,
+            itemCount: controller.properties.length,
           ),
-          itemBuilder: (context, index) =>
-              buildItem(property: controller.properties[index]),
-          separatorBuilder: (context, index) => 15.height,
-          itemCount: controller.properties.length,
         ),
       ),
     );

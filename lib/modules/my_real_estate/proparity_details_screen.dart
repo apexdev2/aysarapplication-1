@@ -79,10 +79,15 @@ class ProparityDetailsScreen extends StatelessWidget with ImageHelper {
                                         .propertyImages?.length ??
                                     0,
                                 separatorBuilder: (context, index) => 10.width,
-                                itemBuilder: (context, index) => GestureDetector(
+                                itemBuilder: (context, index) =>
+                                    GestureDetector(
                                   onTap: () {
-                                    _openGallery(context, index, controller.propertiesdetails.value
-                                        .propertyImages??[]);
+                                    _openGallery(
+                                        context,
+                                        index,
+                                        controller.propertiesdetails.value
+                                                .propertyImages ??
+                                            []);
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -118,21 +123,62 @@ class ProparityDetailsScreen extends StatelessWidget with ImageHelper {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
-                              controller.propertiesdetails.value.name ?? "",
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.bold,
-                                color: const Color(0xff363535),
-                              ),
+                            Row(
+                              children: [
+                                Text(
+                                  controller.propertiesdetails.value.name ?? "",
+                                  style: TextStyle(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: const Color(0xff363535),
+                                  ),
+                                ),
+                                const Spacer(),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "رقم الوحدة",
+                                      style: TextStyle(
+                                        fontSize: 9.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: const Color(0xff363535),
+                                      ),
+                                    ),
+                                    5.height,
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10.w, vertical: 5.h),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xffE7EAFF),
+                                        borderRadius:
+                                            BorderRadius.circular(10.r),
+                                      ),
+                                      child: Text(
+                                        controller.propertiesdetails.value
+                                                .floorNumber ??
+                                            "",
+                                        style: TextStyle(
+                                          fontSize: 20.sp,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
                             25.height,
-                            Text(
-                              appLocale.addressDetails,
-                              style: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.grey.shade400),
+                            Row(
+                              children: [
+                                Text(
+                                  appLocale.addressDetails,
+                                  style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.grey.shade400),
+                                ),
+                              ],
                             ),
                             10.height,
                             Text(
@@ -244,7 +290,7 @@ class ProparityDetailsScreen extends StatelessWidget with ImageHelper {
                             ),
                             10.height,
                             IconTitleBuilder(
-                              title: "غرف نوم",
+                              title: " الغرف",
                               horizontal: 0,
                               titleColor: Colors.grey,
                               fontSize: 12.sp,
@@ -299,7 +345,7 @@ class ProparityDetailsScreen extends StatelessWidget with ImageHelper {
                             ),
                             10.height,
                             IconTitleBuilder(
-                              title: " الغرف",
+                              title: " غرف الخادمة",
                               horizontal: 0,
                               titleColor: Colors.grey,
                               fontSize: 12.sp,
@@ -376,15 +422,17 @@ class ProparityDetailsScreen extends StatelessWidget with ImageHelper {
                                       controller.getPropertyStages(
                                           id: controller
                                               .propertiesdetails.value.id!);
-                                      Get.toNamed(Routes.projectStagesScreen,
-                                          arguments: {
-                                            "id": controller
-                                                .propertiesdetails.value.id,
-                                            "percentage": controller
-                                                .propertiesdetails
-                                                .value
-                                                .completionPercentage!
-                                          },);
+                                      Get.toNamed(
+                                        Routes.projectStagesScreen,
+                                        arguments: {
+                                          "id": controller
+                                              .propertiesdetails.value.id,
+                                          "percentage": controller
+                                              .propertiesdetails
+                                              .value
+                                              .completionPercentage!
+                                        },
+                                      );
                                     },
                                     height: 50,
                                     fontSize: 12,
@@ -416,7 +464,8 @@ class ProparityDetailsScreen extends StatelessWidget with ImageHelper {
       ),
     );
   }
-      void _openGallery(
+
+  void _openGallery(
       BuildContext context, int initialIndex, List<dynamic> imageUrls) {
     showGeneralDialog(
       context: context,
@@ -469,5 +518,4 @@ class ProparityDetailsScreen extends StatelessWidget with ImageHelper {
       },
     );
   }
-
 }

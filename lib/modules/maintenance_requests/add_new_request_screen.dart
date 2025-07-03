@@ -37,8 +37,9 @@ class _AddNewRequestScreenState extends State<AddNewRequestScreen>
         elevation: 0.5,
         title: Text(
           "طلب صيانة",
-          style:
-              TextStyle(fontSize: 16.sp, ),
+          style: TextStyle(
+            fontSize: 16.sp,
+          ),
         ),
         centerTitle: true,
       ),
@@ -64,7 +65,7 @@ class _AddNewRequestScreenState extends State<AddNewRequestScreen>
                       hintColor: Colors.black,
                       item: controller.selectedRealstate,
                       items: propertiesGetxcontroller.properties,
-
+                      withFloarnumber: true,
                       //controller.newsCategoryModel?.data ?? [],
                       callBack: (_) {
                         controller.updateSelectedRealstate(my_real_estate: _);

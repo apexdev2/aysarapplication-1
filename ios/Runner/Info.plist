@@ -54,5 +54,9 @@
 		<string>يحتاج هذا التطبيق إلى الوصول إلى مكتبة الصور لرفع الصور وتخصيص الملف الشخصي.</string>
 	<key>NSMicrophoneUsageDescription</key>
 		<string>هذا التطبيق لا يستخدم الميكروفون، لكن بعض الميزات قد تتطلب الوصول إليه.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>نحتاج إلى إذن لاستخدام الكاميرا لالتقاط الصور</string>
+
+	
 </dict>
 </plist>
