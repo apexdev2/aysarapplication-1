@@ -7,7 +7,7 @@ class PropertiesModel {
   String? image;
   String? name;
   CompanyModel? company;
-  // String? price;
+  //String? price;
   String? type;
   dynamic completionpercentage;
 
@@ -18,7 +18,7 @@ class PropertiesModel {
     this.image,
     this.name,
     this.company,
-    // this.price,
+    //this.price,
     this.completionpercentage,
     this.type,
   });
@@ -31,9 +31,8 @@ class PropertiesModel {
     name = json['name'];
     company =
         json['company'] != null ? CompanyModel.fromJson(json['company']) : null;
-    // price = json['price'];
+    //price = json['price'];
     type = json['type'];
     completionpercentage = json['completion_percentage'];
-
   }
 }
