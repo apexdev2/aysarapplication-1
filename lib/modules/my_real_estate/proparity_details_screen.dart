@@ -275,9 +275,7 @@ class ProparityDetailsScreen extends StatelessWidget with ImageHelper {
                               fontSize: 12.sp,
                               bottom: 10.h,
                               trailing: Text(
-                                controller.propertiesdetails.value
-                                        .masterBedrooms ??
-                                    "",
+                                "${controller.propertiesdetails.value.masterBedrooms ?? ""}",
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   color: Colors.grey,
@@ -296,8 +294,7 @@ class ProparityDetailsScreen extends StatelessWidget with ImageHelper {
                               fontSize: 12.sp,
                               bottom: 10.h,
                               trailing: Text(
-                                controller.propertiesdetails.value.bedrooms ??
-                                    "",
+                                "${controller.propertiesdetails.value.bedrooms ?? ""}",
                                 style: TextStyle(
                                     fontSize: 14.sp, color: Colors.grey),
                               ),
@@ -314,9 +311,7 @@ class ProparityDetailsScreen extends StatelessWidget with ImageHelper {
                               fontSize: 12.sp,
                               bottom: 10.h,
                               trailing: Text(
-                                controller
-                                        .propertiesdetails.value.livingRooms ??
-                                    "",
+                                "${controller.propertiesdetails.value.livingRooms ?? ""}",
                                 style: TextStyle(
                                     fontSize: 14.sp, color: Colors.grey),
                               ),
@@ -333,8 +328,7 @@ class ProparityDetailsScreen extends StatelessWidget with ImageHelper {
                               fontSize: 12.sp,
                               bottom: 10.h,
                               trailing: Text(
-                                controller.propertiesdetails.value.bathrooms ??
-                                    "",
+                                "${controller.propertiesdetails.value.bathrooms ?? ""}",
                                 style: TextStyle(
                                     fontSize: 14.sp, color: Colors.grey),
                               ),
@@ -351,8 +345,7 @@ class ProparityDetailsScreen extends StatelessWidget with ImageHelper {
                               fontSize: 12.sp,
                               bottom: 10.h,
                               trailing: Text(
-                                controller.propertiesdetails.value.totalRooms ??
-                                    "",
+                                "${controller.propertiesdetails.value.totalRooms ?? ""}",
                                 style: TextStyle(
                                     fontSize: 14.sp, color: Colors.grey),
                               ),
@@ -369,9 +362,7 @@ class ProparityDetailsScreen extends StatelessWidget with ImageHelper {
                               fontSize: 12.sp,
                               bottom: 10.h,
                               trailing: Text(
-                                controller
-                                        .propertiesdetails.value.driverRooms ??
-                                    "",
+                                "${controller.propertiesdetails.value.driverRooms ?? ""}",
                                 style: TextStyle(
                                     fontSize: 14.sp, color: Colors.grey),
                               ),
