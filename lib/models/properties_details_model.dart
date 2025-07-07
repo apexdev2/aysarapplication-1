@@ -7,15 +7,15 @@ class PropertiesDetailsModel {
   String? image;
   String? name;
   CompanyModel? company;
-  String? price;
+  //String? price;
   String? type;
-  String? bedrooms;
-  String? area;
-  String? masterBedrooms;
-  String? bathrooms;
-  String? totalRooms;
-  String? driverRooms;
-  String? livingRooms;
+  dynamic bedrooms;
+  dynamic area;
+  dynamic masterBedrooms;
+  dynamic bathrooms;
+  dynamic totalRooms;
+  dynamic driverRooms;
+  dynamic livingRooms;
   String? description;
   String? address;
   num? completionPercentage;
@@ -29,7 +29,7 @@ class PropertiesDetailsModel {
       this.image,
       this.name,
       this.company,
-      this.price,
+      //this.price,
       this.type,
       this.bedrooms,
       this.area,
@@ -52,7 +52,7 @@ class PropertiesDetailsModel {
     name = json['name'];
     company =
         json['company'] != null ? CompanyModel.fromJson(json['company']) : null;
-    price = json['price'];
+    //price = json['price'];
     type = json['type'];
     bedrooms = json['bedrooms'];
     area = json['area'];
