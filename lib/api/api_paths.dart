@@ -3,7 +3,7 @@ class ApiEndPoints {
   static const String _apiBaseUrl = '${_baseUrl}api/client/';
   static const String _apiVersionBaseUrl = '${_apiBaseUrl}v1/';
   static const String apiFullUrl = _apiVersionBaseUrl;
-  static const String productionUrl = "http://aysar.sa/";
+  static const String productionUrl = "https://aysar.sa/";
   static String countries = '${apiFullUrl}shared/countries';
   static String identityType = '${apiFullUrl}shared/identity-type';
   static String registerClient = '${apiFullUrl}appointments/register-client';
